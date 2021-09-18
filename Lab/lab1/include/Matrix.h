@@ -52,6 +52,7 @@ public:
   size_t get_row() const;
   size_t get_col() const;
   size_t get_size() const;
+  double ** get_mat() const;
 
   // operators
   double &operator()(const int i, const int j) const;

@@ -1,5 +1,6 @@
 #include "../include/Matrix.h"
 #include "../include/Matrix_Mul.h"
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <chrono>
@@ -21,8 +22,8 @@ int main(int argc, char *argv[])
   }
 
   long M = strtol(argv[1], NULL, 10);
-  long K = strtol(argv[3], NULL, 10);
   long N = strtol(argv[2], NULL, 10);
+  long K = strtol(argv[3], NULL, 10);
 
   Matrix A(M, K, Matrix::RAND);
   Matrix B(K, N, Matrix::RAND);
@@ -34,47 +35,35 @@ int main(int argc, char *argv[])
             << B;
 #endif
 
-  auto start_X = std::chrono::system_clock::now();
+  char file_name[100] = "./asset/elapsed_time_";
+  strcat(file_name, argv[1]);
+  FILE *fp = fopen(file_name, "a");
+
+  // general mat mul
+  auto start_general = std::chrono::system_clock::now();
   Matrix X = general_mat_mul(A, B);
-  auto end_X = std::chrono::system_clock::now();
-  std::chrono::duration<double> elapsed_seconds_X = end_X - start_X;
+  auto end_general = std::chrono::system_clock::now();
+  std::chrono::duration<double> elapsed_seconds_general = end_general - start_general;
   std::cout << "Elapsed Time of GEMM: " 
-            << elapsed_seconds_X.count() << 's' << std::endl;
+            << elapsed_seconds_general.count() << 's' << std::endl;
 
-  auto start_Y = std::chrono::system_clock::now();
+  // strassen mat mul
+  auto start_strassen = std::chrono::system_clock::now();
   Matrix Y = strassen_mat_mul(A, B);
-  auto end_Y = std::chrono::system_clock::now();
-  std::chrono::duration<double> elapsed_seconds_Y = end_Y - start_Y;
+  auto end_strassen = std::chrono::system_clock::now();
+  std::chrono::duration<double> elapsed_seconds_strassen = end_strassen - start_strassen;
   std::cout << "Elapsed Time of Strassen: " 
-            << elapsed_seconds_Y.count() << 's' << std::endl;
+            << elapsed_seconds_strassen.count() << 's' 
+            << " with error " << X.error(Y) << std::endl;
 
-  auto start_Z = std::chrono::system_clock::now();
-  Matrix Z = mat_mul_4x1(A, B);
-  auto end_Z = std::chrono::system_clock::now();
-  std::chrono::duration<double> elapsed_seconds_Z = end_Z - start_Z;
-  std::cout << "Elapsed Time of OPT-GEMM 4x1: " 
-            << elapsed_seconds_Z.count() << 's' << std::endl;
-
-  auto start_R = std::chrono::system_clock::now();
-  Matrix R = mat_mul_4x4(A, B);
-  auto end_R = std::chrono::system_clock::now();
-  std::chrono::duration<double> elapsed_seconds_R = end_R - start_R;
-  std::cout << "Elapsed Time of OPT-GEMM 4x4: " 
-            << elapsed_seconds_R.count() << 's' << std::endl;
-
-  auto start_S = std::chrono::system_clock::now();
-  Matrix S = mat_mul_4x4_reg(A, B);
-  auto end_S = std::chrono::system_clock::now();
-  std::chrono::duration<double> elapsed_seconds_S = end_S - start_S;
-  std::cout << "Elapsed Time of OPT-GEMM 4x4 wit reg: " 
-            << elapsed_seconds_S.count() << 's' << std::endl;
-
-  auto start_T = std::chrono::system_clock::now();
-  Matrix T = mat_mul_4x4_pac_reg(A, B);
-  auto end_T = std::chrono::system_clock::now();
-  std::chrono::duration<double> elapsed_seconds_T = end_T - start_T;
-  std::cout << "Elapsed Time of OPT-GEMM 4x4 wit pac reg: " 
-            << elapsed_seconds_T.count() << 's' << std::endl;
+  // optimized mat mul
+  auto start_opt = std::chrono::system_clock::now();
+  Matrix Z = opt_mat_mul(A, B);
+  auto end_opt = std::chrono::system_clock::now();
+  std::chrono::duration<double> elapsed_seconds_opt = end_opt - start_opt;
+  std::cout << "Elapsed Time of OPT-GEMM: " 
+            << elapsed_seconds_opt.count() << 's'
+            << " with error " << X.error(Z) << std::endl;
 
   // intel mkl
   double *a, *b, *I;
@@ -88,24 +77,27 @@ int main(int argc, char *argv[])
   auto end_I = std::chrono::system_clock::now();
   std::chrono::duration<double> elapsed_seconds_I = end_I - start_I;
   std::cout << "Elapsed Time of Intel-MKL: "
-            << elapsed_seconds_I.count() << 's' << std::endl;
+            << elapsed_seconds_I.count() << 's'
+            << " with error " << X.error(Matrix(I, M, N)) << std::endl;
+
+  fprintf(fp, "%lf\t%lf\t%lf\t%lf\n",  
+                elapsed_seconds_general.count(),  
+                elapsed_seconds_strassen.count(), 
+                elapsed_seconds_opt.count(), 
+                elapsed_seconds_I.count());
 
 #ifdef DEBUG
   std::cout << "General Matrix Multiplication:" << std::endl
             << X;
   std::cout << "Strassen Matrix Multiplication:" << std::endl
             << Y;
-  std::cout << "Optimized 4x1 Matrix Multiplication:" << std::endl
+  std::cout << "Optimized Matrix Multiplication:" << std::endl
             << Z;
-  std::cout << "Optimized 4x4 Matrix Multiplication:" << std::endl
-            << R;
-  std::cout << "Optimized 4x4 Matrix Multiplication with reg:" << std::endl
-            << S;
-  std::cout << "Optimized 4x4 Matrix Multiplication with pac and reg:" << std::endl
-            << T;
   std::cout << "Intel MKL:" << std::endl
             << Matrix(I, M, N);
 #endif
+
+  fclose(fp);
 
   return 0;
 }

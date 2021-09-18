@@ -19,6 +19,15 @@ double *mat_convert(double *A, long M, long N)
   return A;
 }
 
+void mat_pack(double *pack, const Matrix &A, size_t i, size_t i_out)
+{
+  size_t row = A.get_row();
+  size_t col = A.get_col();
+  for (size_t x = i; x < i + 4; x++)
+    for (size_t y = 0; y < col; y++)
+      pack[row * (x - i_out) + y] = A(x, y);
+}
+
 void Matrix::gen_rand_mat()
 { 
   mat = new double *[row];
@@ -137,6 +146,11 @@ size_t Matrix::get_col() const
 size_t Matrix::get_size() const
 {
   return size;
+}
+
+double **Matrix::get_mat() const
+{
+  return mat;
 }
 
 double &Matrix::operator()(const int x, const int y) const
