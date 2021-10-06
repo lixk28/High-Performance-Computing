@@ -34,22 +34,35 @@ $(TEST_OBJ): $(OBJ_DIR)/%.o: $(TEST_DIR)/%.c
 
 .PHONY: run
 run:
-	@echo General Matrix Multiplication
-	@echo -------------------------------
-	@$(BIN_DIR)/gemm
-	@echo 
 	@echo Matrix Multiplication MPI P2P Communication
+	@echo proc = 4, scale = 512
 	@echo ---------------------------------------------
-	@$(EXEC) -n 4 $(BIN_DIR)/gemm_mpi_p2p
+	@$(EXEC) -n 4 $(BIN_DIR)/mpi_p2p 512 512 512
 	@echo 
 	@echo Matrix Multiplication MPI Set Communication
+	@echo proc = 4, scale = 512
 	@echo ---------------------------------------------
-	@$(EXEC) -n 4 $(BIN_DIR)/gemm_mpi_set
+	@$(EXEC) -n 4 $(BIN_DIR)/mpi_collect 512 512 512
 	@echo 
 
-# TODO: benchmark and performance analysis
 .PHONY: test
 test:
+	for size in 512 768 1024 1280 1536 1792 2048; do \
+		for proc in 1 2 4 ; do \
+			for time in 1 2 3 ; do \
+				echo Matrix Multiplication MPI P2P Communication ; \
+				echo proc = $$proc, size = $$size ; \
+				echo --------------------------------------------- ; \
+				$(EXEC) -n $$proc $(BIN_DIR)/mpi_p2p $$size $$size $$size ; \
+				echo ; \
+				echo Matrix Multiplication MPI Set Communication ; \
+				echo proc = $$proc, size = $$size ; \
+				echo --------------------------------------------- ; \
+				$(EXEC) -n $$proc $(BIN_DIR)/mpi_collect $$size $$size $$size ; \
+				echo ; \
+			done ; \
+		done ; \
+	done
 
 .PHONY: plot
 plot:

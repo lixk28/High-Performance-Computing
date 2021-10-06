@@ -42,4 +42,7 @@ void matrix_destroy(Matrix *A);
 // print a matrix
 void print_matrix(Matrix *A);
 
+// error of two matrices
+double error(Matrix *A, Matrix *B);
+
 #endif
