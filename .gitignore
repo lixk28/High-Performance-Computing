@@ -1,5 +1,6 @@
 Slides/
 References/
-build/
 bin/
+build/
+lib/
 .vscode/
