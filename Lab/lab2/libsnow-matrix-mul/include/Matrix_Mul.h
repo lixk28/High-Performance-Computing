@@ -23,6 +23,4 @@ Matrix strassen_mat_mul(const Matrix &A, const Matrix &B);
 
 Matrix opt_mat_mul(const Matrix &A, const Matrix &B);
 
-Matrix opt_mat_mul_1(const Matrix &A, const Matrix &B);
-
 #endif
