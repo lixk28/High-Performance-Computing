@@ -23,7 +23,7 @@
 
   ```shell
   cd libsnow-mat-mul
-  mkdir build && mkdir bin
+  mkdir build && mkdir lib && mkdir bin
   make
   ```
 
