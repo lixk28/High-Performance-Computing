@@ -1,0 +1,65 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{booktabs}
+\usepackage{diagbox}
+
+\begin{document}
+  \begin{table*}[htbp]
+    \caption{General matrix multiplication elapsed time}
+    \begin{tabular}{llllll}
+      \toprule
+      \diagbox{Comm Size}{Matrix Order} & $128$ & $256$ & $512$ & $1024$ & $2048$ \\
+      \midrule
+      $1$ & 0.020905 & 0.138029 & 1.132524 & 28.505833 & 403.162180 \\
+      $2$ & 0.020905 & 0.138029 & 1.132524 & 28.505833 & 403.162180 \\
+      $4$ & 0.020905 & 0.138029 & 1.132524 & 28.505833 & 403.162180 \\
+      $8$ & 0.020905 & 0.138029 & 1.132524 & 28.505833 & 403.162180 \\
+      $16$ & 0.020905 & 0.138029 & 1.132524 & 28.505833 & 403.162180 \\
+      \bottomrule
+    \end{tabular}
+  \end{table*}
+
+  \begin{table*}[htbp]
+    \caption{My optimized matrix multiplication elapsed time}
+    \begin{tabular}{llllll}
+      \toprule
+      \diagbox{Comm Size}{Matrix Order} & $128$ & $256$ & $512$ & $1024$ & $2048$ \\
+      \midrule
+      $1$ & 0.011226 & 0.039191 & 0.198281 & 2.693320 & 43.000741 \\
+      $2$ & 0.011226 & 0.039191 & 0.198281 & 2.693320 & 43.000741 \\
+      $4$ & 0.011226 & 0.039191 & 0.198281 & 2.693320 & 43.000741 \\
+      $8$ & 0.011226 & 0.039191 & 0.198281 & 2.693320 & 43.000741 \\
+      $16$ & 0.011226 & 0.039191 & 0.198281 & 2.693320 & 43.000741 \\
+      \bottomrule
+    \end{tabular}
+  \end{table*}
+  
+  \begin{table*}[htbp]
+    \caption{P2P MPI matrix multiplication elapsed time}
+    \begin{tabular}{llllll}
+      \toprule
+      \diagbox{Comm Size}{Matrix Order} & $128$ & $256$ & $512$ & $1024$ & $2048$ \\
+      \midrule
+      $1$ & 0.013805 & 0.132869 & 1.136721 & 27.440135 & 405.727127 \\
+      $2$ & 0.008255 & 0.067919 & 0.643046 & 17.992966 & 216.574897 \\
+      $4$ & 0.006454 & 0.051333 & 0.521087 & 11.130705 & 126.646435 \\
+      $8$ & 0.005213 & 0.037429 & 0.453798 & 8.402441 & 91.816284 \\
+      $16$ & 0.124014 & 0.208111 & 0.888161 & 8.640943 & 89.016351 \\
+      \bottomrule
+    \end{tabular}
+  \end{table*}
+
+  \begin{table*}[htbp]
+    \caption{Collective MPI matrix multiplication elapsed time}
+    \begin{tabular}{llllll}
+      \toprule
+      \diagbox{Comm Size}{Matrix Order} & $128$ & $256$ & $512$ & $1024$ & $2048$ \\
+      \midrule
+      $1$ & 0.014632 & 0.137869 & 1.148502 & 28.705399 & 411.752261 \\
+      $2$ & 0.016707 & 0.073242 & 0.610015 & 15.051788 & 213.683344 \\
+      $4$ & 0.007334 & 0.064321 & 0.553858 & 9.156726 & 125.055034 \\
+      $8$ & 0.011986 & 0.036423 & 0.465381 & 6.575210 & 92.940979 \\
+      $16$ & 0.067960 & 0.260153 & 0.908136 & 7.515069 & 110.062592 \\
+      \bottomrule
+    \end{tabular}
+  \end{table*}
+\end{document}
