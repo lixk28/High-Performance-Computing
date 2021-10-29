@@ -92,6 +92,14 @@ void sum_bygroup()
   printf("Sum of sum_bygroup = %d\n", global_sum);
 }
 
+void serial_sum()
+{
+  int sum = 0;
+  for (int i = 0; i < LEN; i++)
+    sum += a[i];
+  printf("Sum of serial_sum: %d\n", sum);
+}
+
 void reset()
 {
   global_sum = 0;
@@ -110,11 +118,15 @@ int main(int argc, char *argv[])
     #endif
     sum += a[i];
   }
-  printf("Sum = %d\n", sum);
 
   thread_count = strtol(argv[1], NULL, 10);
 
   double begin, end;
+
+  GET_WALL_TIME(begin);
+  serial_sum();
+  GET_WALL_TIME(end);
+  printf("Wall time of serial_sum: %lf\n", end - begin);
 
   GET_WALL_TIME(begin);
   sum_byone();
