@@ -4,3 +4,7 @@ bin/
 build/
 lib/
 .vscode/
+*.aux
+*.log
+*.synctex.gz
+test
