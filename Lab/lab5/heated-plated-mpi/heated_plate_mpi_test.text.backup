@@ -31,7 +31,7 @@ HEATED_PLATE_MPI
      16955  0.001000
 
   Error tolerance achieved.
-  Wallclock time = 9.788205
+  Wallclock time = 42.484814
 
 HEATED_PLATE_OPENMP:
   Normal end of execution.

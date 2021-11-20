@@ -3,11 +3,33 @@
 #include <math.h>
 #include <mpi.h>
 #include <stdbool.h>
+#include <string.h>
 
-#define DEBUG
+// #define DEBUG
 
-#define M 12
-#define N 12
+#ifdef DEBUG
+  #include <unistd.h>
+#endif
+
+#define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
+
+#define M 500
+#define N 500
+
+void my_bound(int start, int end, int comm_sz, int my_rank, int *my_first_m, int *my_last_m, int *my_m)
+{
+  if (my_rank == comm_sz - 1) // if I'm the last process
+  {
+    *my_first_m = start + (end - start) / comm_sz * my_rank;
+    *my_last_m = end;  // set my_last_m as M-1
+  }
+  else
+  {
+    *my_first_m = start + (end - start) / comm_sz * my_rank;
+    *my_last_m = *my_first_m + (end - start) / comm_sz;
+  }
+  *my_m = *my_last_m - *my_first_m;
+}
 
 int main(int argc, char *argv[])
 {
@@ -16,13 +38,17 @@ int main(int argc, char *argv[])
   int iterations;
   int iterations_print;
   double mean;
-  double u[M][N];
+  // double u[M][N];
   double w[M][N];
   double wtime;
 
   int comm_sz;
   int my_rank;
+  MPI_Init(&argc, &argv);
   MPI_Comm_size(MPI_COMM_WORLD, &comm_sz);
+  MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
+  
+  /* Initialize w and broadcast w to slaves */
   if (my_rank == 0) // I'm the master
   {
     printf("\n");
@@ -42,14 +68,14 @@ int main(int argc, char *argv[])
       #pragma omp for
       for (i = 1; i < M - 1; i++)
       {
-        w[i][0] = 100.0;  // left border
+        w[i][0] = 100.0;      // left border
         w[i][N - 1] = 100.0;  // right border
       }
       #pragma omp for
       for (j = 0; j < N; j++)
       {
         w[M - 1][j] = 100.0;  // bottom border
-        w[0][j] = 0.0;  // top border
+        w[0][j] = 0.0;        // top border
       }
     
       // 计算边界 w 值之和，加到 mean 上
@@ -78,42 +104,30 @@ int main(int argc, char *argv[])
         for (j = 1; j < N - 1; j++)
           w[i][j] = mean;
     }
+  }
+  /* End of initialization of w */
 
-    // Broadcast w to other slave processes
-    MPI_Bcast(&w[0][0], M * N, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-  }
-  else  // I'm slave
-  {
-    MPI_Bcast(&w[0][0], M * N, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-  }
-
-  // #ifdef DEBUG
-  //   if (my_rank == 1)
-  //     {
-  //       for (int i = 0; i < M; i++)
-  //         for (int j = 0; j < N; j++)
-  //           printf("%.2lf%c", w[i][j], j == N - 1 ? '\n' : '\t');
-  //     }
-  // #endif
-
-  // Compute my assignment boundary
-  int my_first_m, my_last_m;
-  if (my_rank == comm_sz - 1) // I'm the last process
-  {
-    my_first_m = 1 + (M - 2) / comm_sz * my_rank;
-    my_last_m = M - 1;  // set my_last_m as M-1
-  }
-  else
-  {
-    my_first_m = 1 + (M - 2) / comm_sz * my_rank;
-    my_last_m = my_first_m + (M - 2) / comm_sz;
-  }
+  /* Each process compute my_first_m and my_last_m */
+  int my_first_m, my_last_m, my_m;
+  my_bound(1, M - 1, comm_sz, my_rank, &my_first_m, &my_last_m, &my_m);
 
   #ifdef DEBUG
+    // Just check
     MPI_Barrier(MPI_COMM_WORLD);
     printf("I'm process %d, my first m = %d, my last m = %d\n", my_rank, my_first_m, my_last_m);
     MPI_Barrier(MPI_COMM_WORLD);
   #endif
+
+  // set my_w as send buffer, the computation results will be saved in my_w
+  double my_w[my_m][N];
+  for (int i = 0; i < my_m; i++)
+  {
+    my_w[i][0] = 100;
+    my_w[i][N-1] = 100;
+  }
+
+  // set w_buf as recv buffer
+  double w_buf[my_m + 2][N];
 
   if (my_rank == 0)
   {
@@ -129,44 +143,68 @@ int main(int argc, char *argv[])
   double local_begin = MPI_Wtime();
   while (diff >= epsilon)
   {
-    // Save w as u
-    for (int i = 0; i < N; i++)
-      for (int j = 0; j < N; j++)
-        u[i][j] = w[i][j];
+    // Optimization:
+    // 1. use my_w as a send buffer, send my_w to master, then u is no longer needed (finished, performance x ~2)
+    //    - Copy w to u every loop is expensive, O(MN)
+    //    - Send the whole w to master is expensive, many data are unnecessary
+    // 2. use w_buf as recv buffer, recv w_buf from master, not the whole w (finished, performance x ~2.5)
+    // 3. Compute my_w and my_diff at the same time (finished, nearly no performance improvement)
+    // 4. pack and unpack (?)
 
-    // Compute my w for each process
-    for (int i = my_first_m; i < my_last_m; i++)
-      for (int j = 1; j < N - 1; j++)
-        w[i][j] = (u[i-1][j] + u[i+1][j] + u[i][j-1] + u[i][j+1]) / 4.0;
-    
-    // Compute my_diff for each process
-    double my_diff = 0.0;
-    for (int i = my_first_m; i < my_last_m; i++)
-      for (int j = 1; j < N - 1; j++)
-        if (my_diff < fabs(w[i][j] - u[i][j]))
-          my_diff = fabs(w[i][j] - u[i][j]);
+    // Broadcast w to slaves
+    // MPI_Bcast(&w[0][0], M * N, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
-    // Send my_w to master
-    if (my_rank != 0)
-    {
-      MPI_Send(&w[1 + (my_last_m - my_first_m) * my_rank][0], (M - 2) / comm_sz * N, \
-              MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
-    }
-    else  // I'm the master
+    // Do not send the whole w
+    if (my_rank == 0)
     {
       for (int slave = 1; slave < comm_sz; slave++)
       {
-        MPI_Recv(&w[1 + (M - 2) / comm_sz * slave][0], (M - 2) / comm_sz * N, \
-                MPI_DOUBLE, slave, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        int slave_first_m, slave_last_m, slave_m;
+        my_bound(1, M - 1, comm_sz, slave, &slave_first_m, &slave_last_m, &slave_m);
+        MPI_Send(&w[slave_first_m - 1][0], (slave_m + 2) * N, MPI_DOUBLE, slave, 0, MPI_COMM_WORLD);
+      }
+      memcpy(&w_buf[0][0], &w[my_first_m - 1][0], sizeof(double) * (my_m + 2) * N);
+    }
+    else
+    {
+      MPI_Recv(&w_buf[0][0], (my_m + 2) * N, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    }
+
+    // Compute my_w for each process and my_diff at the same time
+    // Note that my_w[i][j] <=> w_buf[i+1][j]
+    double my_diff = 0.0;
+    for (int i = 0; i < my_m; i++)
+    {
+      for (int j = 1; j < N - 1; j++)
+      {
+        my_w[i][j] = (w_buf[i][j] + w_buf[i+2][j] + w_buf[i+1][j-1] + w_buf[i+1][j+1]) / 4.0;
+        my_diff = MAX(my_diff, fabs(my_w[i][j] - w_buf[i+1][j]));
       }
     }
 
-    // Broadcast w to slaves
-    MPI_Bcast(&w[0][0], M * N, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    // // Compute my_diff for each process
+    // double my_diff = 0.0;
+    // for (int i = 0; i < my_m; i++)
+    //   for (int j = 1; j < N - 1; j++)
+    //     my_diff = MAX(my_diff, fabs(my_w[i][j] - w_buf[i+1][j]));
 
-    // Reduce the maximum my_diff to diff, each process will get a copy
-    MPI_Allreduce(&my_diff, &diff, 1, MPI_DOUBLE, MPI_MAX, MPI_COMM_WORLD);
- 
+    if (my_rank != 0) // if I'm slave, send my_w to master
+    {
+      // printf("I'm process %d, my begin row = %d\n", my_rank, my_first_m);
+      MPI_Send(&my_w[0][0], my_m * N, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
+    }
+    else  // if I'm the master, recv my_w from slaves
+    {
+      for (int slave = 1; slave < comm_sz; slave++)
+      {
+        int slave_first_m, slave_last_m, slave_m;
+        my_bound(1, M - 1, comm_sz, slave, &slave_first_m, &slave_last_m, &slave_m);
+        MPI_Recv(&w[slave_first_m][0], slave_m * N, MPI_DOUBLE, slave, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+      }
+      // master should also copy its own my_w to w
+      memcpy(&w[1][0], &my_w[0][0], sizeof(double) * my_m * N);
+    }
+
     #ifdef DEBUG
       if (my_rank == 0)
       {
@@ -175,7 +213,11 @@ int main(int argc, char *argv[])
             printf("%.2lf%c", w[i][j], j == N - 1 ? '\n' : '\t');
         printf("\n");
       }
+      sleep(10);
     #endif
+
+    // Reduce the maximum my_diff to diff, every process will get a copy
+    MPI_Allreduce(&my_diff, &diff, 1, MPI_DOUBLE, MPI_MAX, MPI_COMM_WORLD);
 
     if (my_rank == 0)
     {
