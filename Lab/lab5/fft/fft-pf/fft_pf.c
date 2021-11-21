@@ -523,58 +523,6 @@ void step(int n, int mj, double a[], double b[], double c[],
 
   return;
 }
-// {
-//   double ambr;
-//   double ambu;
-//   int j;
-//   int ja;
-//   int jb;
-//   int jc;
-//   int jd;
-//   int jw;
-//   int k;
-//   int lj;
-//   int mj2;
-//   double wjw[2];
-
-//   mj2 = 2 * mj;
-//   lj = n / mj2;
-
-// #pragma omp parallel \
-//     shared(a, b, c, d, lj, mj, mj2, sgn, w) private(ambr, ambu, j, ja, jb, jc, jd, jw, k, wjw)
-
-// #pragma omp for nowait
-
-//   for (j = 0; j < lj; j++)
-//   {
-//     jw = j * mj;
-//     ja = jw;
-//     jb = ja;
-//     jc = j * mj2;
-//     jd = jc;
-
-//     wjw[0] = w[jw * 2 + 0];
-//     wjw[1] = w[jw * 2 + 1];
-
-//     if (sgn < 0.0)
-//     {
-//       wjw[1] = -wjw[1];
-//     }
-
-//     for (k = 0; k < mj; k++)
-//     {
-//       c[(jc + k) * 2 + 0] = a[(ja + k) * 2 + 0] + b[(jb + k) * 2 + 0];
-//       c[(jc + k) * 2 + 1] = a[(ja + k) * 2 + 1] + b[(jb + k) * 2 + 1];
-
-//       ambr = a[(ja + k) * 2 + 0] - b[(jb + k) * 2 + 0];
-//       ambu = a[(ja + k) * 2 + 1] - b[(jb + k) * 2 + 1];
-
-//       d[(jd + k) * 2 + 0] = wjw[0] * ambr - wjw[1] * ambu;
-//       d[(jd + k) * 2 + 1] = wjw[1] * ambr + wjw[0] * ambu;
-//     }
-//   }
-//   return;
-// }
 
 void timestamp()
 {

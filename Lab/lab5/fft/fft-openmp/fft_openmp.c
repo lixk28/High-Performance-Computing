@@ -81,7 +81,7 @@ int main()
   printf("  of a complex data vector, using OpenMP for parallel execution.\n");
 
   printf("\n");
-  printf("  Number of processors available = %d\n", omp_get_num_procs());
+  // printf("  Number of processors available = %d\n", omp_get_num_procs());
   printf("  Number of threads =              %d\n", omp_get_max_threads());
   /*
   Prepare for tests.
