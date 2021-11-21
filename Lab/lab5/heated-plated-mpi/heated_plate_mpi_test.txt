@@ -25,13 +25,3 @@ HEATED_PLATE_MPI
       1024  0.017707
       2048  0.008856
       4096  0.004428
-      8192  0.002210
-     16384  0.001043
-
-     16955  0.001000
-
-  Error tolerance achieved.
-  Wallclock time = 9.788205
-
-HEATED_PLATE_OPENMP:
-  Normal end of execution.
