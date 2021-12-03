@@ -182,12 +182,6 @@ int main(int argc, char *argv[])
       }
     }
 
-    // // Compute my_diff for each process
-    // double my_diff = 0.0;
-    // for (int i = 0; i < my_m; i++)
-    //   for (int j = 1; j < N - 1; j++)
-    //     my_diff = MAX(my_diff, fabs(my_w[i][j] - w_buf[i+1][j]));
-
     if (my_rank != 0) // if I'm slave, send my_w to master
     {
       // printf("I'm process %d, my begin row = %d\n", my_rank, my_first_m);
@@ -204,17 +198,6 @@ int main(int argc, char *argv[])
       // master should also copy its own my_w to w
       memcpy(&w[1][0], &my_w[0][0], sizeof(double) * my_m * N);
     }
-
-    #ifdef DEBUG
-      if (my_rank == 0)
-      {
-        for (int i = 0; i < M; i++)
-          for (int j = 0; j < N; j++)
-            printf("%.2lf%c", w[i][j], j == N - 1 ? '\n' : '\t');
-        printf("\n");
-      }
-      sleep(10);
-    #endif
 
     // Reduce the maximum my_diff to diff, every process will get a copy
     MPI_Allreduce(&my_diff, &diff, 1, MPI_DOUBLE, MPI_MAX, MPI_COMM_WORLD);

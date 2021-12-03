@@ -27,17 +27,10 @@ typedef struct
 {
   double aw;
   double *w;
-}cffti_arg_t;
-
-// typedef struct
-// {
-//   double *x;
-//   double *y;
-// }ccopy_arg_t;
+} cffti_arg_t;
 
 typedef struct
 {
-  // int n;
   int mj;
   int mj2;
   double *a;
@@ -46,7 +39,7 @@ typedef struct
   double *d;
   double *w;
   double sgn;
-}step_arg_t;
+} step_arg_t;
 
 int thread_count;
 
@@ -113,7 +106,7 @@ int main(int argc, char *argv[])
   /*
   LN2 is the log base 2 of N.  Each increase of LN2 doubles N.
 */
-  for (ln2 = 1; ln2 <= 20; ln2++) // 无法并行，有数据依赖
+  for (ln2 = 1; ln2 <= 21; ln2++) // 无法并行，有数据依赖
   {
     n = 2 * n; // n = 2^(ln2)
                /*
@@ -217,33 +210,13 @@ int main(int argc, char *argv[])
     free(z);
   }
   printf("\n");
-  printf("FFT_SERIAL:\n");
+  printf("FFT_PARALLEL_FOR:\n");
   printf("  Normal end of execution.\n");
   printf("\n");
   timestamp();
 
   return 0;
 }
-
-// void *ccopy_pf(void *arg)
-// {
-//   pf_arg_t *my_arg = (pf_arg_t *)arg;
-//   int my_start = my_arg->my_start;
-//   int my_end = my_arg->my_end;
-//   int my_increment = my_arg->my_increment;
-
-//   ccopy_arg_t *ccopy_arg = (ccopy_arg_t *)my_arg->func_arg;
-//   double *x = ccopy_arg->x;
-//   double *y = ccopy_arg->y;
-
-//   for (int i = my_start; i < my_end; i += my_increment)
-//   {
-//     y[i * 2 + 0] = x[i * 2 + 0];
-//     y[i * 2 + 1] = x[i * 2 + 1];
-//   }
-
-//   return NULL;
-// }
 
 void ccopy(int n, double x[], double y[])
 /*
@@ -267,6 +240,12 @@ void ccopy(int n, double x[], double y[])
     y[i * 2 + 0] = x[i * 2 + 0];
     y[i * 2 + 1] = x[i * 2 + 1];
   }
+
+  // ccopy_arg_t ccopy_arg;
+  // ccopy_arg.x = x;
+  // ccopy_arg.y = y;
+  // parallel_for(0, n, 1, ccopy_pf, (void *)&ccopy_arg, thread_count);
+
   return;
 }
 
@@ -286,30 +265,40 @@ void cfft2(int n, double x[], double y[], double w[], double sgn)
   int j;
   int m;
   int mj;
+  int mj2;
+  int lj;
   int tgle;
+  step_arg_t step_arg;
 
   m = (int)(log((double)n) / log(1.99)); // m = log_2^n
   mj = 1;
+  mj2 = 2 * mj;
+  lj = n / mj2;
 
   tgle = 1; // Toggling switch for work array.
-  step(n, mj, &x[0 * 2 + 0], &x[(n / 2) * 2 + 0], &y[0 * 2 + 0], &y[mj * 2 + 0], w, sgn);
+  step_arg.mj = mj;
+  step_arg.mj2 = mj2;
+  step_arg.a = &x[0 * 2 + 0];
+  step_arg.b = &x[(n / 2) * 2 + 0];
+  step_arg.c = &y[0 * 2 + 0];
+  step_arg.d = &y[mj * 2 + 0];
+  step_arg.w = w;
+  step_arg.sgn = sgn;
+  parallel_for(0, lj, 1, step_pf, (void *)&step_arg, thread_count);
+  // step(n, mj, &x[0 * 2 + 0], &x[(n / 2) * 2 + 0], &y[0 * 2 + 0], &y[mj * 2 + 0], w, sgn);
 
   if (n == 2)
   {
     return;
   }
 
-  int mj2;
-  int lj;
   for (j = 0; j < m - 2; j++) // m = log_2^n，这里的 step 要被重复执行很多次，线程开销过大
   {
     mj = mj * 2;
+    mj2 = 2 * mj;
+    lj = n / mj2;
     if (tgle)
     {
-      mj2 = 2 * mj;
-      lj = n / mj2;
-
-      step_arg_t step_arg;
       step_arg.mj = mj;
       step_arg.mj2 = mj2;
       step_arg.a = &y[0 * 2 + 0];
@@ -325,13 +314,9 @@ void cfft2(int n, double x[], double y[], double w[], double sgn)
     }
     else
     {
-      mj2 = 2 * mj;
-      lj = n / mj2;
-
-      step_arg_t step_arg;
       step_arg.mj = mj;
       step_arg.mj2 = mj2;
-      step_arg.a = &y[0 * 2 + 0];
+      step_arg.a = &x[0 * 2 + 0];
       step_arg.b = &x[(n / 2) * 2 + 0];
       step_arg.c = &y[0 * 2 + 0];
       step_arg.d = &y[mj * 2 + 0];
@@ -350,7 +335,18 @@ void cfft2(int n, double x[], double y[], double w[], double sgn)
   }
 
   mj = n / 2;
-  step(n, mj, &x[0 * 2 + 0], &x[(n / 2) * 2 + 0], &y[0 * 2 + 0], &y[mj * 2 + 0], w, sgn);
+  mj2 = mj * 2;
+  lj = n / mj2;
+  step_arg.mj = mj;
+  step_arg.mj2 = mj2;
+  step_arg.a = &x[0 * 2 + 0];
+  step_arg.b = &x[(n / 2) * 2 + 0];
+  step_arg.c = &y[0 * 2 + 0];
+  step_arg.d = &y[mj * 2 + 0];
+  step_arg.w = w;
+  step_arg.sgn = sgn;
+  parallel_for(0, lj, 1, step_pf, (void *)&step_arg, thread_count);
+  // step(n, mj, &x[0 * 2 + 0], &x[(n / 2) * 2 + 0], &y[0 * 2 + 0], &y[mj * 2 + 0], w, sgn);
 
   return;
 }

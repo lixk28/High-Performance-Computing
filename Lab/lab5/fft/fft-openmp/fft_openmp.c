@@ -58,7 +58,7 @@ int main()
   int icase;
   int it;
   int ln2;
-  int ln2_max = 20;
+  int ln2_max = 21;
   double mflops;
   int n;
   int nits = 10000;
