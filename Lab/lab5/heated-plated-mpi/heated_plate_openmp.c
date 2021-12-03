@@ -210,61 +210,40 @@ int main(int argc, char *argv[])
 
   while (epsilon <= diff)
   {
-#pragma omp parallel shared(u, w) private(i, j)
+    #pragma omp parallel shared(u, w) private(i, j)
     {
-/*
-  Save the old solution in U.
-*/
-#pragma omp for
+      //  Save the old solution in U.
+      #pragma omp for
       for (i = 0; i < M; i++)
-      {
         for (j = 0; j < N; j++)
-        {
           u[i][j] = w[i][j];
-        }
-      }
-/*
-  Determine the new estimate of the solution at the interior points.
-  The new solution W is the average of north, south, east and west neighbors.
-*/
-#pragma omp for
-      for (i = 1; i < M - 1; i++)
-      {
-        for (j = 1; j < N - 1; j++)
-        {
-          w[i][j] = (u[i - 1][j] + u[i + 1][j] + u[i][j - 1] + u[i][j + 1]) / 4.0;
-        }
-      }
-    }
-    /*
-  C and C++ cannot compute a maximum as a reduction operation.
 
-  Therefore, we define a private variable MY_DIFF for each thread.
-  Once they have all computed their values, we use a CRITICAL section
-  to update DIFF.
-*/
+      // Determine the new estimate of the solution at the interior points.
+      // The new solution W is the average of north, south, east and west neighbors.
+      #pragma omp for
+      for (i = 1; i < M - 1; i++)
+        for (j = 1; j < N - 1; j++)
+          w[i][j] = (u[i - 1][j] + u[i + 1][j] + u[i][j - 1] + u[i][j + 1]) / 4.0;
+    }
+    
+    // C and C++ cannot compute a maximum as a reduction operation.
+
+    // Therefore, we define a private variable MY_DIFF for each thread.
+    // Once they have all computed their values, we use a CRITICAL section
+    // to update DIFF.
     diff = 0.0;
-#pragma omp parallel shared(diff, u, w) private(i, j, my_diff)
+    #pragma omp parallel shared(diff, u, w) private(i, j, my_diff)
     {
       my_diff = 0.0;
-#pragma omp for
+      #pragma omp for
       for (i = 1; i < M - 1; i++)
-      {
         for (j = 1; j < N - 1; j++)
-        {
           if (my_diff < fabs(w[i][j] - u[i][j]))
-          {
             my_diff = fabs(w[i][j] - u[i][j]);
-          }
-        }
-      }
-#pragma omp critical
-      {
-        if (diff < my_diff)
-        {
-          diff = my_diff;
-        }
-      }
+
+      #pragma omp critical
+      if (diff < my_diff)
+        diff = my_diff;
     }
 
     iterations++;

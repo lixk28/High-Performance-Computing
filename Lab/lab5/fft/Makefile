@@ -32,6 +32,11 @@ memory-test:
 	valgrind --tool=massif --time-unit=B --stacks=yes --massif-out-file=$(AST_DIR)/massif.out.pf $(BIN_DIR)/fft_pf $(shell grep -c ^processor /proc/cpuinfo)
 	valgrind --tool=massif --time-unit=B --stacks=yes --massif-out-file=$(AST_DIR)/massif.out.omp $(BIN_DIR)/fft_openmp
 
+.PHONY: print
+print:
+	ms_print ./asset/massif.out.pf
+	ms_print ./asset/massif.out.omp
+
 .PHONY: clean
 clean:
 	-rm -f $(BIN_DIR)/*

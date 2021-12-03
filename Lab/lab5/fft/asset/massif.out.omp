@@ -12,547 +12,1000 @@ heap_tree=empty
 #-----------
 snapshot=1
 #-----------
-time=15616
-mem_heap_B=0
-mem_heap_extra_B=0
-mem_stacks_B=7392
-heap_tree=detailed
-n0: 0 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
-#-----------
-snapshot=2
-#-----------
-time=42128
-mem_heap_B=0
-mem_heap_extra_B=0
-mem_stacks_B=2560
-heap_tree=empty
-#-----------
-snapshot=3
-#-----------
-time=63232
-mem_heap_B=0
-mem_heap_extra_B=0
-mem_stacks_B=2624
-heap_tree=detailed
-n0: 0 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
-#-----------
-snapshot=4
-#-----------
-time=89208
-mem_heap_B=0
-mem_heap_extra_B=0
-mem_stacks_B=3752
-heap_tree=empty
-#-----------
-snapshot=5
-#-----------
-time=117224
-mem_heap_B=0
-mem_heap_extra_B=0
-mem_stacks_B=984
-heap_tree=empty
-#-----------
-snapshot=6
-#-----------
-time=144352
-mem_heap_B=0
-mem_heap_extra_B=0
-mem_stacks_B=1632
-heap_tree=empty
-#-----------
-snapshot=7
-#-----------
-time=162640
-mem_heap_B=0
-mem_heap_extra_B=0
-mem_stacks_B=1328
-heap_tree=detailed
-n0: 0 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
-#-----------
-snapshot=8
-#-----------
-time=192248
-mem_heap_B=0
-mem_heap_extra_B=0
-mem_stacks_B=1432
-heap_tree=empty
-#-----------
-snapshot=9
-#-----------
-time=205112
-mem_heap_B=0
-mem_heap_extra_B=0
-mem_stacks_B=1432
-heap_tree=empty
-#-----------
-snapshot=10
-#-----------
-time=230464
-mem_heap_B=0
-mem_heap_extra_B=0
-mem_stacks_B=1584
-heap_tree=empty
-#-----------
-snapshot=11
-#-----------
-time=263544
-mem_heap_B=0
-mem_heap_extra_B=0
-mem_stacks_B=1432
-heap_tree=empty
-#-----------
-snapshot=12
-#-----------
-time=286464
-mem_heap_B=0
-mem_heap_extra_B=0
-mem_stacks_B=1328
-heap_tree=empty
-#-----------
-snapshot=13
-#-----------
-time=307552
-mem_heap_B=0
-mem_heap_extra_B=0
-mem_stacks_B=352
-heap_tree=empty
-#-----------
-snapshot=14
-#-----------
-time=337264
-mem_heap_B=0
-mem_heap_extra_B=0
-mem_stacks_B=800
-heap_tree=empty
-#-----------
-snapshot=15
-#-----------
-time=370312
+time=369992
 mem_heap_B=32816
 mem_heap_extra_B=8
 mem_stacks_B=784
 heap_tree=peak
 n1: 32816 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
- n1: 32816 0x4AD5098: __alloc_dir (opendir.c:118)
-  n1: 32816 0x4AD5098: opendir_tail (opendir.c:69)
-   n1: 32816 0x4AD5098: opendir (opendir.c:92)
-    n1: 32816 0x4B13B4F: get_nprocs_conf (getsysstats.c:242)
-     n1: 32816 0x4ADC82C: posix_sysconf (sysconf.c:628)
-      n1: 32816 0x4ADC82C: linux_sysconf (sysconf.c:106)
-       n1: 32816 0x4ADC82C: sysconf (sysconf.c:36)
-        n1: 32816 0x49CEB92: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-         n1: 32816 0x49BC679: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+ n1: 32816 0x4ACE098: __alloc_dir (opendir.c:118)
+  n1: 32816 0x4ACE098: opendir_tail (opendir.c:69)
+   n1: 32816 0x4ACE098: opendir (opendir.c:92)
+    n1: 32816 0x4B0CB4F: get_nprocs_conf (getsysstats.c:242)
+     n1: 32816 0x4AD582C: posix_sysconf (sysconf.c:628)
+      n1: 32816 0x4AD582C: linux_sysconf (sysconf.c:106)
+       n1: 32816 0x4AD582C: sysconf (sysconf.c:36)
+        n1: 32816 0x49C7B92: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+         n1: 32816 0x49B5679: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
           n1: 32816 0x4011B89: call_init.part.0 (dl-init.c:72)
            n1: 32816 0x4011C90: call_init (dl-init.c:30)
             n1: 32816 0x4011C90: _dl_init (dl-init.c:119)
              n0: 32816 0x4001139: ??? (in /usr/lib/x86_64-linux-gnu/ld-2.31.so)
 #-----------
+snapshot=2
+#-----------
+time=843088
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3800
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=1233240
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3968
+heap_tree=detailed
+n5: 8922 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n3: 4136 0x49B724C: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+  n1: 3936 0x49C57FB: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 3936 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 3936 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 3936 0x109679: main (fft_openmp.c:153)
+  n1: 192 0x49C59A0: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 192 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 192 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 192 0x109679: main (fft_openmp.c:153)
+  n0: 8 in 1 place, below massif's threshold (1.00%)
+ n1: 3168 0x40149CA: allocate_dtv (dl-tls.c:286)
+  n1: 3168 0x40149CA: _dl_allocate_tls (dl-tls.c:532)
+   n1: 3168 0x4BEF322: allocate_stack (allocatestack.c:622)
+    n1: 3168 0x4BEF322: pthread_create@@GLIBC_2.2.5 (pthread_create.c:660)
+     n1: 3168 0x49C5DEA: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+      n1: 3168 0x49BD8E0: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+       n1: 3168 0x109DC4: cffti (fft_openmp.c:402)
+        n0: 3168 0x109679: main (fft_openmp.c:153)
+ n1: 1024 0x4A71E83: _IO_file_doallocate (filedoalloc.c:101)
+  n2: 1024 0x4A8204F: _IO_doallocbuf (genops.c:347)
+   n1: 1024 0x4A810AF: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
+    n1: 1024 0x4A7F834: _IO_new_file_xsputn (fileops.c:1244)
+     n1: 1024 0x4A7F834: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+      n1: 1024 0x4A74677: puts (ioputs.c:40)
+       n1: 1024 0x109FB5: timestamp (fft_openmp.c:585)
+        n0: 1024 0x1093E4: main (fft_openmp.c:75)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 303 0x4AC313A: __tzfile_read (tzfile.c:275)
+  n1: 303 0x4AC21D4: tzset_internal (tzset.c:405)
+   n1: 303 0x4AC2B4B: __tz_convert (tzset.c:577)
+    n1: 303 0x109F86: timestamp (fft_openmp.c:581)
+     n0: 303 0x1093E4: main (fft_openmp.c:75)
+ n0: 291 in 10 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=4
+#-----------
+time=1472424
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4144
+heap_tree=empty
+#-----------
+snapshot=5
+#-----------
+time=1769648
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4168
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=2223400
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4176
+heap_tree=empty
+#-----------
+snapshot=7
+#-----------
+time=2630104
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3744
+heap_tree=detailed
+n5: 8922 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n3: 4136 0x49B724C: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+  n1: 3936 0x49C57FB: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 3936 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 3936 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 3936 0x109679: main (fft_openmp.c:153)
+  n1: 192 0x49C59A0: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 192 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 192 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 192 0x109679: main (fft_openmp.c:153)
+  n0: 8 in 1 place, below massif's threshold (1.00%)
+ n1: 3168 0x40149CA: allocate_dtv (dl-tls.c:286)
+  n1: 3168 0x40149CA: _dl_allocate_tls (dl-tls.c:532)
+   n1: 3168 0x4BEF322: allocate_stack (allocatestack.c:622)
+    n1: 3168 0x4BEF322: pthread_create@@GLIBC_2.2.5 (pthread_create.c:660)
+     n1: 3168 0x49C5DEA: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+      n1: 3168 0x49BD8E0: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+       n1: 3168 0x109DC4: cffti (fft_openmp.c:402)
+        n0: 3168 0x109679: main (fft_openmp.c:153)
+ n1: 1024 0x4A71E83: _IO_file_doallocate (filedoalloc.c:101)
+  n2: 1024 0x4A8204F: _IO_doallocbuf (genops.c:347)
+   n1: 1024 0x4A810AF: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
+    n1: 1024 0x4A7F834: _IO_new_file_xsputn (fileops.c:1244)
+     n1: 1024 0x4A7F834: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+      n1: 1024 0x4A74677: puts (ioputs.c:40)
+       n1: 1024 0x109FB5: timestamp (fft_openmp.c:585)
+        n0: 1024 0x1093E4: main (fft_openmp.c:75)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 303 0x4AC313A: __tzfile_read (tzfile.c:275)
+  n1: 303 0x4AC21D4: tzset_internal (tzset.c:405)
+   n1: 303 0x4AC2B4B: __tz_convert (tzset.c:577)
+    n1: 303 0x109F86: timestamp (fft_openmp.c:581)
+     n0: 303 0x1093E4: main (fft_openmp.c:75)
+ n0: 291 in 10 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=8
+#-----------
+time=2849224
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3600
+heap_tree=empty
+#-----------
+snapshot=9
+#-----------
+time=3318856
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3792
+heap_tree=empty
+#-----------
+snapshot=10
+#-----------
+time=3631816
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3824
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=3976528
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3464
+heap_tree=empty
+#-----------
+snapshot=12
+#-----------
+time=4446592
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3864
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=4775464
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3792
+heap_tree=empty
+#-----------
+snapshot=14
+#-----------
+time=5010456
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4064
+heap_tree=empty
+#-----------
+snapshot=15
+#-----------
+time=5292440
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3904
+heap_tree=empty
+#-----------
 snapshot=16
 #-----------
-time=408064
-mem_heap_B=0
-mem_heap_extra_B=0
-mem_stacks_B=592
+time=5715600
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3944
 heap_tree=empty
 #-----------
 snapshot=17
 #-----------
-time=427080
-mem_heap_B=8
-mem_heap_extra_B=16
-mem_stacks_B=320
+time=6138320
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3912
 heap_tree=empty
 #-----------
 snapshot=18
 #-----------
-time=450120
-mem_heap_B=8
-mem_heap_extra_B=16
-mem_stacks_B=320
+time=6460648
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4176
 heap_tree=empty
 #-----------
 snapshot=19
 #-----------
-time=486352
-mem_heap_B=798
-mem_heap_extra_B=50
-mem_stacks_B=1104
+time=6702344
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3984
 heap_tree=empty
 #-----------
 snapshot=20
 #-----------
-time=511128
-mem_heap_B=1410
-mem_heap_extra_B=102
-mem_stacks_B=464
+time=7024632
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3904
 heap_tree=empty
 #-----------
 snapshot=21
 #-----------
-time=537760
-mem_heap_B=4858
-mem_heap_extra_B=166
-mem_stacks_B=3200
+time=7346920
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3824
 heap_tree=empty
 #-----------
 snapshot=22
 #-----------
-time=568224
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=3608
+time=7749808
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3848
 heap_tree=empty
 #-----------
 snapshot=23
 #-----------
-time=600016
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2536
-heap_tree=empty
+time=7991624
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3968
+heap_tree=detailed
+n5: 8922 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n3: 4136 0x49B724C: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+  n1: 3936 0x49C57FB: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 3936 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 3936 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 3936 0x109679: main (fft_openmp.c:153)
+  n1: 192 0x49C59A0: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 192 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 192 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 192 0x109679: main (fft_openmp.c:153)
+  n0: 8 in 1 place, below massif's threshold (1.00%)
+ n1: 3168 0x40149CA: allocate_dtv (dl-tls.c:286)
+  n1: 3168 0x40149CA: _dl_allocate_tls (dl-tls.c:532)
+   n1: 3168 0x4BEF322: allocate_stack (allocatestack.c:622)
+    n1: 3168 0x4BEF322: pthread_create@@GLIBC_2.2.5 (pthread_create.c:660)
+     n1: 3168 0x49C5DEA: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+      n1: 3168 0x49BD8E0: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+       n1: 3168 0x109DC4: cffti (fft_openmp.c:402)
+        n0: 3168 0x109679: main (fft_openmp.c:153)
+ n1: 1024 0x4A71E83: _IO_file_doallocate (filedoalloc.c:101)
+  n2: 1024 0x4A8204F: _IO_doallocbuf (genops.c:347)
+   n1: 1024 0x4A810AF: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
+    n1: 1024 0x4A7F834: _IO_new_file_xsputn (fileops.c:1244)
+     n1: 1024 0x4A7F834: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+      n1: 1024 0x4A74677: puts (ioputs.c:40)
+       n1: 1024 0x109FB5: timestamp (fft_openmp.c:585)
+        n0: 1024 0x1093E4: main (fft_openmp.c:75)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 303 0x4AC313A: __tzfile_read (tzfile.c:275)
+  n1: 303 0x4AC21D4: tzset_internal (tzset.c:405)
+   n1: 303 0x4AC2B4B: __tz_convert (tzset.c:577)
+    n1: 303 0x109F86: timestamp (fft_openmp.c:581)
+     n0: 303 0x1093E4: main (fft_openmp.c:75)
+ n0: 291 in 10 places, all below massif's threshold (1.00%)
 #-----------
 snapshot=24
 #-----------
-time=634488
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2768
+time=8394480
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3512
 heap_tree=empty
 #-----------
 snapshot=25
 #-----------
-time=671736
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2496
-heap_tree=empty
+time=8797376
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3816
+heap_tree=detailed
+n5: 8922 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n3: 4136 0x49B724C: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+  n1: 3936 0x49C57FB: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 3936 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 3936 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 3936 0x109679: main (fft_openmp.c:153)
+  n1: 192 0x49C59A0: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 192 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 192 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 192 0x109679: main (fft_openmp.c:153)
+  n0: 8 in 1 place, below massif's threshold (1.00%)
+ n1: 3168 0x40149CA: allocate_dtv (dl-tls.c:286)
+  n1: 3168 0x40149CA: _dl_allocate_tls (dl-tls.c:532)
+   n1: 3168 0x4BEF322: allocate_stack (allocatestack.c:622)
+    n1: 3168 0x4BEF322: pthread_create@@GLIBC_2.2.5 (pthread_create.c:660)
+     n1: 3168 0x49C5DEA: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+      n1: 3168 0x49BD8E0: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+       n1: 3168 0x109DC4: cffti (fft_openmp.c:402)
+        n0: 3168 0x109679: main (fft_openmp.c:153)
+ n1: 1024 0x4A71E83: _IO_file_doallocate (filedoalloc.c:101)
+  n2: 1024 0x4A8204F: _IO_doallocbuf (genops.c:347)
+   n1: 1024 0x4A810AF: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
+    n1: 1024 0x4A7F834: _IO_new_file_xsputn (fileops.c:1244)
+     n1: 1024 0x4A7F834: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+      n1: 1024 0x4A74677: puts (ioputs.c:40)
+       n1: 1024 0x109FB5: timestamp (fft_openmp.c:585)
+        n0: 1024 0x1093E4: main (fft_openmp.c:75)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 303 0x4AC313A: __tzfile_read (tzfile.c:275)
+  n1: 303 0x4AC21D4: tzset_internal (tzset.c:405)
+   n1: 303 0x4AC2B4B: __tz_convert (tzset.c:577)
+    n1: 303 0x109F86: timestamp (fft_openmp.c:581)
+     n0: 303 0x1093E4: main (fft_openmp.c:75)
+ n0: 291 in 10 places, all below massif's threshold (1.00%)
 #-----------
 snapshot=26
 #-----------
-time=691240
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2832
+time=9119616
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3736
 heap_tree=empty
 #-----------
 snapshot=27
 #-----------
-time=711480
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2640
+time=9522496
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3832
 heap_tree=empty
 #-----------
 snapshot=28
 #-----------
-time=732472
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2640
+time=9844880
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3512
 heap_tree=empty
 #-----------
 snapshot=29
 #-----------
-time=754296
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2912
+time=10167192
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3696
 heap_tree=empty
 #-----------
 snapshot=30
 #-----------
-time=776776
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2880
+time=10405472
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4024
 heap_tree=empty
 #-----------
 snapshot=31
 #-----------
-time=799336
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2832
+time=10762824
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4112
 heap_tree=empty
 #-----------
 snapshot=32
 #-----------
-time=823832
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2816
+time=11001264
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3944
 heap_tree=empty
 #-----------
 snapshot=33
 #-----------
-time=848728
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2544
+time=11358704
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3816
 heap_tree=empty
 #-----------
 snapshot=34
 #-----------
-time=874360
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=3040
+time=11835152
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3976
 heap_tree=empty
 #-----------
 snapshot=35
 #-----------
-time=900808
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2576
+time=12073496
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3680
 heap_tree=empty
 #-----------
 snapshot=36
 #-----------
-time=927336
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2832
+time=12430976
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4232
 heap_tree=empty
 #-----------
 snapshot=37
 #-----------
-time=954072
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2800
+time=12788768
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3576
 heap_tree=empty
 #-----------
 snapshot=38
 #-----------
-time=981848
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2768
+time=13146232
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3936
 heap_tree=empty
 #-----------
 snapshot=39
 #-----------
-time=1010600
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2928
+time=13503768
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3904
 heap_tree=empty
 #-----------
 snapshot=40
 #-----------
-time=1039608
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2880
+time=13742024
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3856
 heap_tree=empty
 #-----------
 snapshot=41
 #-----------
-time=1069928
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=3040
+time=13980280
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3232
 heap_tree=empty
 #-----------
 snapshot=42
 #-----------
-time=1101352
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2864
+time=14218688
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4216
 heap_tree=empty
 #-----------
 snapshot=43
 #-----------
-time=1133688
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2976
+time=14457016
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3776
 heap_tree=empty
 #-----------
 snapshot=44
 #-----------
-time=1156784
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2872
+time=14814408
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3824
 heap_tree=empty
 #-----------
 snapshot=45
 #-----------
-time=1187744
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2904
+time=15052680
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3824
 heap_tree=empty
 #-----------
 snapshot=46
 #-----------
-time=1225568
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2872
-heap_tree=empty
+time=15290904
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3872
+heap_tree=detailed
+n5: 8922 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n3: 4136 0x49B724C: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+  n1: 3936 0x49C57FB: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 3936 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 3936 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 3936 0x109679: main (fft_openmp.c:153)
+  n1: 192 0x49C59A0: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 192 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 192 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 192 0x109679: main (fft_openmp.c:153)
+  n0: 8 in 1 place, below massif's threshold (1.00%)
+ n1: 3168 0x40149CA: allocate_dtv (dl-tls.c:286)
+  n1: 3168 0x40149CA: _dl_allocate_tls (dl-tls.c:532)
+   n1: 3168 0x4BEF322: allocate_stack (allocatestack.c:622)
+    n1: 3168 0x4BEF322: pthread_create@@GLIBC_2.2.5 (pthread_create.c:660)
+     n1: 3168 0x49C5DEA: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+      n1: 3168 0x49BD8E0: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+       n1: 3168 0x109DC4: cffti (fft_openmp.c:402)
+        n0: 3168 0x109679: main (fft_openmp.c:153)
+ n1: 1024 0x4A71E83: _IO_file_doallocate (filedoalloc.c:101)
+  n2: 1024 0x4A8204F: _IO_doallocbuf (genops.c:347)
+   n1: 1024 0x4A810AF: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
+    n1: 1024 0x4A7F834: _IO_new_file_xsputn (fileops.c:1244)
+     n1: 1024 0x4A7F834: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+      n1: 1024 0x4A74677: puts (ioputs.c:40)
+       n1: 1024 0x109FB5: timestamp (fft_openmp.c:585)
+        n0: 1024 0x1093E4: main (fft_openmp.c:75)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 303 0x4AC313A: __tzfile_read (tzfile.c:275)
+  n1: 303 0x4AC21D4: tzset_internal (tzset.c:405)
+   n1: 303 0x4AC2B4B: __tz_convert (tzset.c:577)
+    n1: 303 0x109F86: timestamp (fft_openmp.c:581)
+     n0: 303 0x1093E4: main (fft_openmp.c:75)
+ n0: 291 in 10 places, all below massif's threshold (1.00%)
 #-----------
 snapshot=47
 #-----------
-time=1252520
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2208
+time=15529192
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3952
 heap_tree=empty
 #-----------
 snapshot=48
 #-----------
-time=1290280
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2816
+time=15886640
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3320
 heap_tree=empty
 #-----------
 snapshot=49
 #-----------
-time=1322792
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2800
+time=16125136
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4104
 heap_tree=empty
 #-----------
 snapshot=50
 #-----------
-time=1335776
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2712
+time=16344264
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4016
 heap_tree=empty
 #-----------
 snapshot=51
 #-----------
-time=1348656
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2920
+time=16563584
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3896
 heap_tree=empty
 #-----------
 snapshot=52
 #-----------
-time=1361640
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2832
-heap_tree=empty
+time=16782704
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3896
+heap_tree=detailed
+n5: 8922 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n3: 4136 0x49B724C: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+  n1: 3936 0x49C57FB: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 3936 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 3936 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 3936 0x109679: main (fft_openmp.c:153)
+  n1: 192 0x49C59A0: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 192 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 192 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 192 0x109679: main (fft_openmp.c:153)
+  n0: 8 in 1 place, below massif's threshold (1.00%)
+ n1: 3168 0x40149CA: allocate_dtv (dl-tls.c:286)
+  n1: 3168 0x40149CA: _dl_allocate_tls (dl-tls.c:532)
+   n1: 3168 0x4BEF322: allocate_stack (allocatestack.c:622)
+    n1: 3168 0x4BEF322: pthread_create@@GLIBC_2.2.5 (pthread_create.c:660)
+     n1: 3168 0x49C5DEA: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+      n1: 3168 0x49BD8E0: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+       n1: 3168 0x109DC4: cffti (fft_openmp.c:402)
+        n0: 3168 0x109679: main (fft_openmp.c:153)
+ n1: 1024 0x4A71E83: _IO_file_doallocate (filedoalloc.c:101)
+  n2: 1024 0x4A8204F: _IO_doallocbuf (genops.c:347)
+   n1: 1024 0x4A810AF: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
+    n1: 1024 0x4A7F834: _IO_new_file_xsputn (fileops.c:1244)
+     n1: 1024 0x4A7F834: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+      n1: 1024 0x4A74677: puts (ioputs.c:40)
+       n1: 1024 0x109FB5: timestamp (fft_openmp.c:585)
+        n0: 1024 0x1093E4: main (fft_openmp.c:75)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 303 0x4AC313A: __tzfile_read (tzfile.c:275)
+  n1: 303 0x4AC21D4: tzset_internal (tzset.c:405)
+   n1: 303 0x4AC2B4B: __tz_convert (tzset.c:577)
+    n1: 303 0x109F86: timestamp (fft_openmp.c:581)
+     n0: 303 0x1093E4: main (fft_openmp.c:75)
+ n0: 291 in 10 places, all below massif's threshold (1.00%)
 #-----------
 snapshot=53
 #-----------
-time=1374664
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2304
+time=17001848
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4256
 heap_tree=empty
 #-----------
 snapshot=54
 #-----------
-time=1387744
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2952
+time=17220976
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3672
 heap_tree=empty
 #-----------
 snapshot=55
 #-----------
-time=1400720
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2824
-heap_tree=detailed
-n5: 6874 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
- n3: 3272 0x49BE24C: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-  n1: 3072 0x49CC7FB: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-   n1: 3072 0x49C48C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-    n1: 3072 0x109DC4: cffti (fft_openmp.c:402)
-     n0: 3072 0x109679: main (fft_openmp.c:153)
-  n1: 192 0x49CC9A0: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-   n1: 192 0x49C48C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-    n1: 192 0x109DC4: cffti (fft_openmp.c:402)
-     n0: 192 0x109679: main (fft_openmp.c:153)
-  n0: 8 in 1 place, below massif's threshold (1.00%)
- n1: 2016 0x40149CA: allocate_dtv (dl-tls.c:286)
-  n1: 2016 0x40149CA: _dl_allocate_tls (dl-tls.c:532)
-   n1: 2016 0x4BF6322: allocate_stack (allocatestack.c:622)
-    n1: 2016 0x4BF6322: pthread_create@@GLIBC_2.2.5 (pthread_create.c:660)
-     n1: 2016 0x49CCDEA: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-      n1: 2016 0x49C48E0: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
-       n1: 2016 0x109DC4: cffti (fft_openmp.c:402)
-        n0: 2016 0x109679: main (fft_openmp.c:153)
- n1: 1024 0x4A78E83: _IO_file_doallocate (filedoalloc.c:101)
-  n2: 1024 0x4A8904F: _IO_doallocbuf (genops.c:347)
-   n1: 1024 0x4A880AF: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
-    n1: 1024 0x4A86834: _IO_new_file_xsputn (fileops.c:1244)
-     n1: 1024 0x4A86834: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
-      n1: 1024 0x4A7B677: puts (ioputs.c:40)
-       n1: 1024 0x109FB5: timestamp (fft_openmp.c:585)
-        n0: 1024 0x1093E4: main (fft_openmp.c:75)
-   n0: 0 in 1 place, below massif's threshold (1.00%)
- n1: 303 0x4ACA13A: __tzfile_read (tzfile.c:275)
-  n1: 303 0x4AC91D4: tzset_internal (tzset.c:405)
-   n1: 303 0x4AC9B4B: __tz_convert (tzset.c:577)
-    n1: 303 0x109F86: timestamp (fft_openmp.c:581)
-     n0: 303 0x1093E4: main (fft_openmp.c:75)
- n0: 259 in 10 places, all below massif's threshold (1.00%)
+time=17440224
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3736
+heap_tree=empty
 #-----------
 snapshot=56
 #-----------
-time=1413696
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=3064
+time=17659344
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3864
 heap_tree=empty
 #-----------
 snapshot=57
 #-----------
-time=1426584
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2944
+time=17878488
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4096
 heap_tree=empty
 #-----------
 snapshot=58
 #-----------
-time=1439616
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2744
+time=18097680
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4104
 heap_tree=empty
 #-----------
 snapshot=59
 #-----------
-time=1452560
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2920
+time=18316808
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4016
 heap_tree=empty
 #-----------
 snapshot=60
 #-----------
-time=1465544
-mem_heap_B=6874
-mem_heap_extra_B=222
-mem_stacks_B=2832
+time=18536128
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3896
 heap_tree=empty
 #-----------
 snapshot=61
 #-----------
-time=1478408
-mem_heap_B=5775
-mem_heap_extra_B=145
-mem_stacks_B=2904
+time=18755248
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3832
 heap_tree=empty
 #-----------
 snapshot=62
 #-----------
-time=1491312
-mem_heap_B=5472
-mem_heap_extra_B=136
-mem_stacks_B=2904
+time=18974512
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3784
+heap_tree=detailed
+n5: 8922 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n3: 4136 0x49B724C: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+  n1: 3936 0x49C57FB: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 3936 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 3936 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 3936 0x109679: main (fft_openmp.c:153)
+  n1: 192 0x49C59A0: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 192 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 192 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 192 0x109679: main (fft_openmp.c:153)
+  n0: 8 in 1 place, below massif's threshold (1.00%)
+ n1: 3168 0x40149CA: allocate_dtv (dl-tls.c:286)
+  n1: 3168 0x40149CA: _dl_allocate_tls (dl-tls.c:532)
+   n1: 3168 0x4BEF322: allocate_stack (allocatestack.c:622)
+    n1: 3168 0x4BEF322: pthread_create@@GLIBC_2.2.5 (pthread_create.c:660)
+     n1: 3168 0x49C5DEA: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+      n1: 3168 0x49BD8E0: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+       n1: 3168 0x109DC4: cffti (fft_openmp.c:402)
+        n0: 3168 0x109679: main (fft_openmp.c:153)
+ n1: 1024 0x4A71E83: _IO_file_doallocate (filedoalloc.c:101)
+  n2: 1024 0x4A8204F: _IO_doallocbuf (genops.c:347)
+   n1: 1024 0x4A810AF: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
+    n1: 1024 0x4A7F834: _IO_new_file_xsputn (fileops.c:1244)
+     n1: 1024 0x4A7F834: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+      n1: 1024 0x4A74677: puts (ioputs.c:40)
+       n1: 1024 0x109FB5: timestamp (fft_openmp.c:585)
+        n0: 1024 0x1093E4: main (fft_openmp.c:75)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 303 0x4AC313A: __tzfile_read (tzfile.c:275)
+  n1: 303 0x4AC21D4: tzset_internal (tzset.c:405)
+   n1: 303 0x4AC2B4B: __tz_convert (tzset.c:577)
+    n1: 303 0x109F86: timestamp (fft_openmp.c:581)
+     n0: 303 0x1093E4: main (fft_openmp.c:75)
+ n0: 291 in 10 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=63
+#-----------
+time=19193688
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3552
+heap_tree=empty
+#-----------
+snapshot=64
+#-----------
+time=19412832
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3704
+heap_tree=empty
+#-----------
+snapshot=65
+#-----------
+time=19631952
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3816
+heap_tree=empty
+#-----------
+snapshot=66
+#-----------
+time=19851072
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3576
+heap_tree=empty
+#-----------
+snapshot=67
+#-----------
+time=20070224
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4104
+heap_tree=empty
+#-----------
+snapshot=68
+#-----------
+time=20289376
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3512
+heap_tree=empty
+#-----------
+snapshot=69
+#-----------
+time=20508544
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4024
+heap_tree=empty
+#-----------
+snapshot=70
+#-----------
+time=20727744
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3784
+heap_tree=empty
+#-----------
+snapshot=71
+#-----------
+time=20946936
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4256
+heap_tree=empty
+#-----------
+snapshot=72
+#-----------
+time=21166056
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3376
+heap_tree=detailed
+n5: 8922 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n3: 4136 0x49B724C: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+  n1: 3936 0x49C57FB: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 3936 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 3936 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 3936 0x109679: main (fft_openmp.c:153)
+  n1: 192 0x49C59A0: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 192 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 192 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 192 0x109679: main (fft_openmp.c:153)
+  n0: 8 in 1 place, below massif's threshold (1.00%)
+ n1: 3168 0x40149CA: allocate_dtv (dl-tls.c:286)
+  n1: 3168 0x40149CA: _dl_allocate_tls (dl-tls.c:532)
+   n1: 3168 0x4BEF322: allocate_stack (allocatestack.c:622)
+    n1: 3168 0x4BEF322: pthread_create@@GLIBC_2.2.5 (pthread_create.c:660)
+     n1: 3168 0x49C5DEA: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+      n1: 3168 0x49BD8E0: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+       n1: 3168 0x109DC4: cffti (fft_openmp.c:402)
+        n0: 3168 0x109679: main (fft_openmp.c:153)
+ n1: 1024 0x4A71E83: _IO_file_doallocate (filedoalloc.c:101)
+  n2: 1024 0x4A8204F: _IO_doallocbuf (genops.c:347)
+   n1: 1024 0x4A810AF: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
+    n1: 1024 0x4A7F834: _IO_new_file_xsputn (fileops.c:1244)
+     n1: 1024 0x4A7F834: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+      n1: 1024 0x4A74677: puts (ioputs.c:40)
+       n1: 1024 0x109FB5: timestamp (fft_openmp.c:585)
+        n0: 1024 0x1093E4: main (fft_openmp.c:75)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 303 0x4AC313A: __tzfile_read (tzfile.c:275)
+  n1: 303 0x4AC21D4: tzset_internal (tzset.c:405)
+   n1: 303 0x4AC2B4B: __tz_convert (tzset.c:577)
+    n1: 303 0x109F86: timestamp (fft_openmp.c:581)
+     n0: 303 0x1093E4: main (fft_openmp.c:75)
+ n0: 291 in 10 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=73
+#-----------
+time=21385256
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4176
+heap_tree=empty
+#-----------
+snapshot=74
+#-----------
+time=21604376
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3904
+heap_tree=empty
+#-----------
+snapshot=75
+#-----------
+time=21823600
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3592
+heap_tree=empty
+#-----------
+snapshot=76
+#-----------
+time=22042768
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4104
+heap_tree=empty
+#-----------
+snapshot=77
+#-----------
+time=22261896
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4016
+heap_tree=empty
+#-----------
+snapshot=78
+#-----------
+time=22481088
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4024
+heap_tree=empty
+#-----------
+snapshot=79
+#-----------
+time=22700208
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3992
+heap_tree=empty
+#-----------
+snapshot=80
+#-----------
+time=22919480
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4256
+heap_tree=empty
+#-----------
+snapshot=81
+#-----------
+time=23138608
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3768
+heap_tree=empty
+#-----------
+snapshot=82
+#-----------
+time=23357728
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3864
+heap_tree=detailed
+n5: 8922 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n3: 4136 0x49B724C: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+  n1: 3936 0x49C57FB: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 3936 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 3936 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 3936 0x109679: main (fft_openmp.c:153)
+  n1: 192 0x49C59A0: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+   n1: 192 0x49BD8C9: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+    n1: 192 0x109DC4: cffti (fft_openmp.c:402)
+     n0: 192 0x109679: main (fft_openmp.c:153)
+  n0: 8 in 1 place, below massif's threshold (1.00%)
+ n1: 3168 0x40149CA: allocate_dtv (dl-tls.c:286)
+  n1: 3168 0x40149CA: _dl_allocate_tls (dl-tls.c:532)
+   n1: 3168 0x4BEF322: allocate_stack (allocatestack.c:622)
+    n1: 3168 0x4BEF322: pthread_create@@GLIBC_2.2.5 (pthread_create.c:660)
+     n1: 3168 0x49C5DEA: ??? (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+      n1: 3168 0x49BD8E0: GOMP_parallel (in /usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+       n1: 3168 0x109DC4: cffti (fft_openmp.c:402)
+        n0: 3168 0x109679: main (fft_openmp.c:153)
+ n1: 1024 0x4A71E83: _IO_file_doallocate (filedoalloc.c:101)
+  n2: 1024 0x4A8204F: _IO_doallocbuf (genops.c:347)
+   n1: 1024 0x4A810AF: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:745)
+    n1: 1024 0x4A7F834: _IO_new_file_xsputn (fileops.c:1244)
+     n1: 1024 0x4A7F834: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1197)
+      n1: 1024 0x4A74677: puts (ioputs.c:40)
+       n1: 1024 0x109FB5: timestamp (fft_openmp.c:585)
+        n0: 1024 0x1093E4: main (fft_openmp.c:75)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 303 0x4AC313A: __tzfile_read (tzfile.c:275)
+  n1: 303 0x4AC21D4: tzset_internal (tzset.c:405)
+   n1: 303 0x4AC2B4B: __tz_convert (tzset.c:577)
+    n1: 303 0x109F86: timestamp (fft_openmp.c:581)
+     n0: 303 0x1093E4: main (fft_openmp.c:75)
+ n0: 291 in 10 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=83
+#-----------
+time=23576848
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=3960
+heap_tree=empty
+#-----------
+snapshot=84
+#-----------
+time=23796120
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4096
+heap_tree=empty
+#-----------
+snapshot=85
+#-----------
+time=24015312
+mem_heap_B=8922
+mem_heap_extra_B=254
+mem_stacks_B=4104
 heap_tree=empty
