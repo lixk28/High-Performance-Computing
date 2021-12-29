@@ -5,7 +5,7 @@
 #include <sys/time.h>
 #include <cuda_runtime.h>
 
-// #define DEBUG
+#define DEBUG
 
 __global__ void cuda_conv2d_kernel(int *input, int *output, int *kernel, int input_height, int input_width, int kernel_height, int kernel_width)
 {
@@ -23,7 +23,7 @@ __global__ void cuda_conv2d_kernel(int *input, int *output, int *kernel, int inp
   output[row * (input_width - kernel_width + 1) + col] = sum;
 }
 
-void cuda_conv2d(int *input, int *output, int *kernel, int input_height, int input_width, int kernel_height, int kernel_width)
+void cuda_conv2d(int *input, int *output, int *kernel, int input_height, int input_width, int kernel_height, int kernel_width, int block_size)
 {
   int output_height = input_height - kernel_height + 1;
   int output_width = input_width - kernel_width + 1;
@@ -41,13 +41,23 @@ void cuda_conv2d(int *input, int *output, int *kernel, int input_height, int inp
   cudaMemcpy(input_d, input, sizeof(int) * input_height * input_width, cudaMemcpyHostToDevice);
   cudaMemcpy(kernel_d, kernel, sizeof(int) * kernel_height * kernel_width, cudaMemcpyHostToDevice);
 
-  // call cuda conv2d kernel
-  dim3 dim_block(kernel_width, kernel_height);
-  dim3 dim_grid(output_width, output_height);
+  // if block_size is too large, then we set it as the size of output
+  // or, we will partition output into blocks
+  block_size = output_width < block_size ? output_width : block_size;
+  dim3 dim_block(block_size, block_size);
+
+  // if grid dimensions is divisible by block_size, then we can perfectly partition it
+  // or, we add one row and one col to contain the remain part of output
+  int grid_x = output_width % block_size == 0 ? output_width / block_size : output_width / block_size + 1;
+  int grid_y = output_height % block_size == 0 ? output_height / block_size : output_height / block_size + 1;
+  dim3 dim_grid(grid_x, grid_y);
+
   #ifdef DEBUG
     printf("dim_grid(%d, %d)\n", dim_grid.x, dim_grid.y);
     printf("dim_block(%d, %d)\n", dim_block.x, dim_block.y);
   #endif
+
+  // call cuda conv2d kernel
   cuda_conv2d_kernel<<<dim_grid, dim_block>>>(input_d, output_d, kernel_d, input_height, input_width, kernel_height, kernel_width);
 
   // copy conv2d output from device to host
@@ -83,6 +93,7 @@ int main(int argc, char const *argv[])
 {
   int input_height = strtol(argv[1], NULL, 10);
   int input_width = strtol(argv[2], NULL, 10);
+  int block_size = strtol(argv[3], NULL, 10);
 
   int kernel_height = 3;
   int kernel_width = 3;
@@ -110,7 +121,7 @@ int main(int argc, char const *argv[])
   double begin, end;
 
   begin = get_wall_time();
-  cuda_conv2d(input, output, kernel, input_height, input_width, kernel_height, kernel_width);
+  cuda_conv2d(input, output, kernel, input_height, input_width, kernel_height, kernel_width, block_size);
   end = get_wall_time();
 
   printf("wall time of cuda_conv2d, input size = %d: %e\n", input_height, end - begin);
