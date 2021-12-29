@@ -11,7 +11,9 @@ $(TARGET): $(SRC)
 .PHONY: test
 test:
 	for size in 256 512 1024 2048 4096 ; do \
-			./$(TARGET) $$size $$size ; \
+		for stride in 1 2 3 ; do \
+			./$(TARGET) $$size $$size 32 ; \
+		done ; \
 	done
 
 .PHONY: clean
