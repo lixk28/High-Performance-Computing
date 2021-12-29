@@ -7,8 +7,9 @@
 
 #define DEBUG
 
-__global__ void cuda_conv2d_kernel(int *input, int *output, int *kernel, int input_height, int input_width, int kernel_height, int kernel_width)
+__global__ void cuda_conv2d_kernel(int *input, int *output, int *kernel, int input_height, int input_width, int kernel_height, int kernel_width, int stride)
 {
+  // output[row][col] is to be calculated in this thread
   int row = threadIdx.y + blockDim.y * blockIdx.y;
   int col = threadIdx.x + blockDim.x * blockIdx.x;
 
@@ -17,16 +18,16 @@ __global__ void cuda_conv2d_kernel(int *input, int *output, int *kernel, int inp
   {
     for (int j = 0; j < kernel_width; j++)
     {
-      sum += kernel[i * kernel_width + j] * input[(row + i) * input_width + (col + j)];
+      sum += kernel[i * kernel_width + j] * input[(row * stride + i) * input_width + (col * stride + j)];
     }
   }
-  output[row * (input_width - kernel_width + 1) + col] = sum;
+  output[row * ((input_width - kernel_width) / stride + 1) + col] = sum;
 }
 
-void cuda_conv2d(int *input, int *output, int *kernel, int input_height, int input_width, int kernel_height, int kernel_width, int block_size)
+void cuda_conv2d(int *input, int *output, int *kernel, int input_height, int input_width, int kernel_height, int kernel_width, int block_size, int stride)
 {
-  int output_height = input_height - kernel_height + 1;
-  int output_width = input_width - kernel_width + 1;
+  int output_height = (input_height - kernel_height) / stride + 1;
+  int output_width = (input_width - kernel_width) / stride + 1;
 
   int *input_d = NULL;
   int *output_d = NULL;
@@ -58,7 +59,7 @@ void cuda_conv2d(int *input, int *output, int *kernel, int input_height, int inp
   #endif
 
   // call cuda conv2d kernel
-  cuda_conv2d_kernel<<<dim_grid, dim_block>>>(input_d, output_d, kernel_d, input_height, input_width, kernel_height, kernel_width);
+  cuda_conv2d_kernel<<<dim_grid, dim_block>>>(input_d, output_d, kernel_d, input_height, input_width, kernel_height, kernel_width, stride);
 
   // copy conv2d output from device to host
   cudaMemcpy(output, output_d, sizeof(int) * output_height * output_width, cudaMemcpyDeviceToHost);
@@ -94,12 +95,14 @@ int main(int argc, char const *argv[])
   int input_height = strtol(argv[1], NULL, 10);
   int input_width = strtol(argv[2], NULL, 10);
   int block_size = strtol(argv[3], NULL, 10);
+  int stride = strtol(argv[4], NULL, 10);
 
   int kernel_height = 3;
   int kernel_width = 3;
 
-  int output_height = input_height - kernel_height + 1;
-  int output_width = input_width - kernel_width + 1;
+  // just valid padding, for simplicity
+  int output_height = (input_height - kernel_height) / stride + 1;
+  int output_width = (input_width - kernel_width) / stride + 1;
 
   int *input = (int *)malloc(sizeof(int) * input_height * input_width);
   int *output = (int *)malloc(sizeof(int) * output_height * output_width);
@@ -121,7 +124,7 @@ int main(int argc, char const *argv[])
   double begin, end;
 
   begin = get_wall_time();
-  cuda_conv2d(input, output, kernel, input_height, input_width, kernel_height, kernel_width, block_size);
+  cuda_conv2d(input, output, kernel, input_height, input_width, kernel_height, kernel_width, block_size, stride);
   end = get_wall_time();
 
   printf("wall time of cuda_conv2d, input size = %d: %e\n", input_height, end - begin);
