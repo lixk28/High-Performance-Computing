@@ -1,61 +1,128 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <time.h>
-#include <sys/times.h>
+#include <sys/time.h>
 #include <cuda_runtime.h>
 
-#define DEBUG
+// #define DEBUG
+
+__global__ void cuda_conv2d_kernel(int *input, int *output, int *kernel, int input_height, int input_width, int kernel_height, int kernel_width)
+{
+  int row = threadIdx.y + blockDim.y * blockIdx.y;
+  int col = threadIdx.x + blockDim.x * blockIdx.x;
+
+  int sum = 0;
+  for (int i = 0; i < kernel_height; i++)
+  {
+    for (int j = 0; j < kernel_width; j++)
+    {
+      sum += kernel[i * kernel_width + j] * input[(row + i) * input_width + (col + j)];
+    }
+  }
+  output[row * (input_width - kernel_width + 1) + col] = sum;
+}
+
+void cuda_conv2d(int *input, int *output, int *kernel, int input_height, int input_width, int kernel_height, int kernel_width)
+{
+  int output_height = input_height - kernel_height + 1;
+  int output_width = input_width - kernel_width + 1;
+
+  int *input_d = NULL;
+  int *output_d = NULL;
+  int *kernel_d = NULL;
+  
+  // allocate memory on device
+  cudaMalloc((void **)&input_d, sizeof(int) * input_height * input_width);
+  cudaMalloc((void **)&output_d, sizeof(int) * output_height * output_width);
+  cudaMalloc((void **)&kernel_d, sizeof(int) * kernel_height * kernel_width);
+  
+  // copy memory from host to device
+  cudaMemcpy(input_d, input, sizeof(int) * input_height * input_width, cudaMemcpyHostToDevice);
+  cudaMemcpy(kernel_d, kernel, sizeof(int) * kernel_height * kernel_width, cudaMemcpyHostToDevice);
+
+  // call cuda conv2d kernel
+  dim3 dim_block(kernel_width, kernel_height);
+  dim3 dim_grid(output_width, output_height);
+  #ifdef DEBUG
+    printf("dim_grid(%d, %d)\n", dim_grid.x, dim_grid.y);
+    printf("dim_block(%d, %d)\n", dim_block.x, dim_block.y);
+  #endif
+  cuda_conv2d_kernel<<<dim_grid, dim_block>>>(input_d, output_d, kernel_d, input_height, input_width, kernel_height, kernel_width);
+
+  // copy conv2d output from device to host
+  cudaMemcpy(output, output_d, sizeof(int) * output_height * output_width, cudaMemcpyDeviceToHost);
+
+  // free allocated memory on device
+  cudaFree(input_d);
+  cudaFree(output_d);
+  cudaFree(kernel_d);
+}
 
 double get_wall_time(){
     struct timeval time;
     if (gettimeofday(&time,NULL)){
         return 0;
     }
-    return (double)time.tv_sec + (double)time.tv_usec * .000001;
+    return (int)time.tv_sec + (int)time.tv_usec * .000001;
 }
 
-__global__ void cuda_conv2d_kernel(int *input_d, int *ouput_d, int height, int width, int depth, int kernel_num, int kernel_size, int stride)
+#ifdef DEBUG
+  void print_matrix(int *mat, int m, int n)
+  {
+    for (int i = 0; i < m; i++)
+    {
+      for (int j = 0; j < n; j++)
+        printf("%d%c", mat[i * n + j], j == n - 1 ? '\n' : '\t');
+    }
+    printf("\n");
+  }
+#endif
+
+int main(int argc, char const *argv[])
 {
-  int row = blockDim.y * blockIdx.y + threadIdx.y;
-  int col = blockDim.x * blockIdx.x + threadIdx.x;
+  int input_height = strtol(argv[1], NULL, 10);
+  int input_width = strtol(argv[2], NULL, 10);
 
-  // int output_height = (height - kernel_size) / stride + 1;  // no padding
-  // int output_width = (width - kernel_size) / stride + 1;
-  // int output_depth = kernel_num;
+  int kernel_height = 3;
+  int kernel_width = 3;
 
-}
+  int output_height = input_height - kernel_height + 1;
+  int output_width = input_width - kernel_width + 1;
 
-void cuda_conv2d(int *input, int *output, int height, int width, int depth, int kernel_num, int kernel_size, int stride, int block_size)
-{
-  int *input_d;
-  int *output_d;
-  
-  int output_height = (height - kernel_size) / stride + 1;  // no padding
-  int output_width = (width - kernel_size) / stride + 1;
-  int output_depth = kernel_num;
+  int *input = (int *)malloc(sizeof(int) * input_height * input_width);
+  int *output = (int *)malloc(sizeof(int) * output_height * output_width);
+  int *kernel = (int *)malloc(sizeof(int) * kernel_height * kernel_width);
 
-  cudaMalloc((void **)&input_d, sizeof(int) * height * width * depth);
-  cudaMalloc((void **)&output_d, sizeof(int) * ouput_height * output_width * output_depth);
+  srand(20211231);
+  for (int i = 0; i < input_height * input_width; i++)
+    input[i] = rand() % 5;
 
-  cudaMemcpy(input_d, input, sizeof(int) * height * width * depth, cudaMemcpyHostToDevice);
-  cudaMemcpy(output_d, output, sizeof(int) * ouput_height * output_width * output_depth, cudaMemcpyHostToDevice);
+  srand(20220101);
+  for (int i = 0; i < kernel_height * kernel_width; i++)
+    kernel[i] = rand() % 5;
 
-  dim3 dim_grid(height / block_size, width / block_size);
-  dim3 dim_block(block_size, block_size);
+  #ifdef DEBUG
+    printf("input:\n"); print_matrix(input, input_height, input_width);
+    printf("kernel:\n"); print_matrix(kernel, kernel_height, kernel_width);
+  #endif
 
-  // todo
-  cuda_conv2d_kernel<<<dim_grid, dim_block>>>();
+  double begin, end;
 
-  cudaMemcpy(output, output_d, sizeof(int) * ouput_height * output_width * output_depth, cudaMemcpyDeviceToHost);
+  begin = get_wall_time();
+  cuda_conv2d(input, output, kernel, input_height, input_width, kernel_height, kernel_width);
+  end = get_wall_time();
 
-  cudaFree(input_d);
-  cudaFree(output_d);
+  printf("wall time of cuda_conv2d, input size = %d: %e\n", input_height, end - begin);
 
-}
+  #ifdef DEBUG
+    printf("output:\n"); print_matrix(output, output_height, output_width);
+  #endif
 
-int main(int argc, char *argv[])
-{
+  // free allocated memory on host
+  free(input);
+  free(output);
+  free(kernel);
 
-
-  retrun 0;
+  return 0;
 }
