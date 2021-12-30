@@ -1,13 +1,16 @@
-CC := nvcc
+CXX := nvcc
 SRC := ./cudnn_conv2d.cu
 TARGET := cudnn_conv2d
-LD_FLAGS := 
+
+CUDNN_INC_PATH := /opt/conda/include
+CUDNN_LIB_PATH := /opt/conda/lib
+CUDNN_LD_FLAG := -lcudnn
 
 .PHONY: all
 all: $(TARGET)
 
 $(TARGET): $(SRC)
-	$(CC) $^ -o $@
+	export LD_LIBRARY_PATH=$(CUDNN_LIB_PATH) && $(CXX) -I$(CUDNN_INC_PATH) -L$(CUDNN_LIB_PATH) -o $@ $^ $(CUDNN_LD_FLAG)
 
 .PHONY: test
 test:
