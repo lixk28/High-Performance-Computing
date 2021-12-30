@@ -3,9 +3,9 @@
 #include <stdint.h>
 #include <time.h>
 #include <sys/time.h>
-#include <cuda_runtime.h>
+#include "cuda_runtime.h"
 
-#define DEBUG
+// #define DEBUG
 
 __global__ void cuda_conv2d_kernel(int *input, int *output, int *kernel, int input_height, int input_width, int kernel_height, int kernel_width, int stride)
 {
@@ -94,8 +94,8 @@ int main(int argc, char const *argv[])
 {
   int input_height = strtol(argv[1], NULL, 10);
   int input_width = strtol(argv[2], NULL, 10);
-  int block_size = strtol(argv[3], NULL, 10);
-  int stride = strtol(argv[4], NULL, 10);
+  int stride = strtol(argv[3], NULL, 10);
+  int block_size = strtol(argv[4], NULL, 10);
 
   int kernel_height = 3;
   int kernel_width = 3;
@@ -127,7 +127,7 @@ int main(int argc, char const *argv[])
   cuda_conv2d(input, output, kernel, input_height, input_width, kernel_height, kernel_width, block_size, stride);
   end = get_wall_time();
 
-  printf("wall time of cuda_conv2d, input size = %d: %e\n", input_height, end - begin);
+  printf("wall time of cuda_conv2d, input size = %d, stride = %d: %e\n", input_height, stride, end - begin);
 
   #ifdef DEBUG
     printf("output:\n"); print_matrix(output, output_height, output_width);

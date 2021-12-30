@@ -42,11 +42,11 @@ void matrix_mul_cuda(double *A, double *B, double *C, int m, int k, int n, int b
   cudaMemcpy(B_d, B, sizeof(double) * k * n, cudaMemcpyHostToDevice);
   cudaMemcpy(C_d, C, sizeof(double) * m * n, cudaMemcpyHostToDevice);
 
-  dim3 dim_grid(m / block_size, n / block_size);
+  dim3 dim_grid(n / block_size, m / block_size);
   dim3 dim_block(block_size, block_size);
   
   #ifdef DEBUG
-    printf("dim_grid(%d), dim_block(%d)\n", dim_grid.x, dim_block.x);
+    printf("dim_grid(%d, %d), dim_block(%d, %d)\n", dim_grid.x, dim_grid.y, dim_block.x, dim_block.y);
   #endif
 
   matrix_mul_cuda_kernel<<<dim_grid, dim_block>>>(A_d, B_d, C_d, m, k, n);
