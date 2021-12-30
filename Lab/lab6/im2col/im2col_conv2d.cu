@@ -20,12 +20,12 @@
 
 double get_wall_time()
 {
-    struct timeval time;
-    if (gettimeofday(&time,NULL))
-    {
-        return 0;
-    }
-    return (double)time.tv_sec + (double)time.tv_usec * .000001;
+  struct timeval time;
+  if (gettimeofday(&time, NULL))
+  {
+    return 0;
+  }
+  return (double)time.tv_sec + (double)time.tv_usec * .000001;
 }
 
 __global__ void matrix_mul_cuda_kernel(int *A, int *B, int *C, int m, int k, int n)
@@ -47,7 +47,7 @@ void matrix_mul_cuda(int *A, int *B, int *C, int m, int k, int n, int block_size
   int *B_d;
   int *C_d;
 
-  cudaMalloc((void **)&A_d, sizeof(int) * m * k);  // use double pointer
+  cudaMalloc((void **)&A_d, sizeof(int) * m * k); // use double pointer
   cudaMalloc((void **)&B_d, sizeof(int) * k * n);
   cudaMalloc((void **)&C_d, sizeof(int) * m * n);
 
@@ -59,7 +59,7 @@ void matrix_mul_cuda(int *A, int *B, int *C, int m, int k, int n, int block_size
   int grid_y = m % block_size == 0 ? m / block_size : m / block_size + 1;
   dim3 dim_grid(grid_x, grid_y);
   dim3 dim_block(block_size, block_size);
-  
+
   #ifdef DEBUG
     printf("dim_grid(%d, %d), dim_block(%d, %d)\n", dim_grid.x, dim_grid.y, dim_block.x, dim_block.y);
   #endif
@@ -75,44 +75,45 @@ void matrix_mul_cuda(int *A, int *B, int *C, int m, int k, int n, int block_size
 
 __host__ void im2col(int *im, int *im_col, int input_height, int input_width, int output_height, int output_width, int kernel_height, int kernel_width, int stride)
 {
-	int im_col_height = kernel_height * kernel_width;
-	int im_col_width = output_height * output_width;
-  
+  int im_col_height = kernel_height * kernel_width;
+  int im_col_width = output_height * output_width;
+
   // output_count is the col index of im_col
   int output_count = 0;
 
-	// valid padding, drop the rest cols and rows
-	for (int i = 0; i + kernel_height - 1 < input_height; i += stride)
-	{
-		for (int j = 0; j + kernel_width - 1 < input_width; j += stride)
-		{
-			for (int i_k = 0; i_k < kernel_height; i_k++)
-			{
-				for (int j_k = 0; j_k < kernel_width; j_k++)
-				{
-					int row = i + i_k;
-					int col = j + j_k;
-					im_col[(i_k * kernel_width + j_k) * im_col_width + output_count] = im[row * input_width + col];
-				}
-			}
+  // valid padding, drop the rest cols and rows
+  for (int i = 0; i + kernel_height - 1 < input_height; i += stride)
+  {
+    for (int j = 0; j + kernel_width - 1 < input_width; j += stride)
+    {
+      for (int i_k = 0; i_k < kernel_height; i_k++)
+      {
+        for (int j_k = 0; j_k < kernel_width; j_k++)
+        {
+          int row = i + i_k;
+          int col = j + j_k;
+          im_col[(i_k * kernel_width + j_k) * im_col_width + output_count] = im[row * input_width + col];
+        }
+      }
       output_count += 1;
-		}
-	}
+    }
+  }
 }
 
 void cuda_conv2d(int *input, int *output, int *kernel, int input_height, int input_width, int kernel_height, int kernel_width, int block_size, int stride)
 {
   int output_height = (input_height - kernel_height) / stride + 1;
   int output_width = (input_width - kernel_width) / stride + 1;
-  
+
   int im_col_height = kernel_height * kernel_width;
-	int im_col_width = output_height * output_width;
+  int im_col_width = output_height * output_width;
 
   int *im_col = (int *)malloc(sizeof(int) * im_col_height * im_col_width);
   im2col(input, im_col, input_height, input_width, output_height, output_width, kernel_height, kernel_width, stride);
-  
+
   #ifdef DEBUG
-    printf("im2col:\n"); print_matrix(im_col, kernel_height * kernel_width, output_height * output_width);
+    printf("im2col:\n");
+    print_matrix(im_col, kernel_height * kernel_width, output_height * output_width);
   #endif
 
   matrix_mul_cuda(kernel, im_col, output, 1, kernel_height * kernel_width, output_height * output_width, block_size);
@@ -167,6 +168,6 @@ int main(int argc, char *argv[])
   free(input);
   free(output);
   free(kernel);
-  
+
   return 0;
 }
