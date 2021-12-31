@@ -20,12 +20,15 @@ __global__ void matrix_mul_cuda_kernel(double *A, double *B, double *C, int m, i
   int row = blockDim.y * blockIdx.y + threadIdx.y;
   int col = blockDim.x * blockIdx.x + threadIdx.x;
 
-  double value = 0;
-  for (int l = 0; l < k; l++)
+  if (row < m && col < n) // this check is necessary
   {
-    value += A[row * k + l] * B[l * n + col];
+    double value = 0;
+    for (int l = 0; l < k; l++)
+    {
+      value += A[row * k + l] * B[l * n + col];
+    }
+    C[row * n + col] = value;
   }
-  C[row * n + col] = value;
 }
 
 void matrix_mul_cuda(double *A, double *B, double *C, int m, int k, int n, int block_size)
@@ -42,8 +45,13 @@ void matrix_mul_cuda(double *A, double *B, double *C, int m, int k, int n, int b
   cudaMemcpy(B_d, B, sizeof(double) * k * n, cudaMemcpyHostToDevice);
   cudaMemcpy(C_d, C, sizeof(double) * m * n, cudaMemcpyHostToDevice);
 
-  dim3 dim_grid(n / block_size, m / block_size);
-  dim3 dim_block(block_size, block_size);
+  int grid_x = n % block_size == 0 ? n / block_size : n / block_size + 1;
+  int grid_y = m % block_size == 0 ? m / block_size : m / block_size + 1;
+  dim3 dim_grid(grid_x, grid_y);
+
+  int block_x = n < block_size ? n : block_size;
+  int block_y = m < block_size ? m : block_size;
+  dim3 dim_block(block_x, block_y);
   
   #ifdef DEBUG
     printf("dim_grid(%d, %d), dim_block(%d, %d)\n", dim_grid.x, dim_grid.y, dim_block.x, dim_block.y);
@@ -91,7 +99,7 @@ void print_matrix(double *mat, int m, int n)
   for (int i = 0; i < m; i++)
   {
     for (int j = 0; j < n; j++)
-      printf("%.2lf", mat[i * n + j]);
+      printf("%.2lf\t", mat[i * n + j]);
     printf("\n");
   }
   printf("\n");
@@ -149,13 +157,15 @@ int main(int argc, char *argv[])
   begin = get_wall_time();
   matrix_mul_cublas(A, B, D, m, k, n);
   end = get_wall_time();
-  printf("wall time of cublas_gemm: %.5lf\n", end - begin);
+  printf("wall time of cublas_gemm, matrix size %d, block size %d: %.5lf\n", m, block_size, end - begin);
 
   printf("error: %.5lf\n", error(C, D, m, n));
 
   #ifdef DEBUG
-    print_matrix(C, m, n);
-    print_matrix(D, m, n);
+    printf("A:\n"); print_matrix(A, m, k);
+    printf("B:\n"); print_matrix(B, k, n);
+    printf("C:\n"); print_matrix(C, m, n);
+    printf("D:\n"); print_matrix(D, m, n);
   #endif
 
   free(A);

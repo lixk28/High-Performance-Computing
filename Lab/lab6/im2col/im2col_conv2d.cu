@@ -28,45 +28,51 @@ double get_wall_time()
   return (double)time.tv_sec + (double)time.tv_usec * .000001;
 }
 
-__global__ void matrix_mul_cuda_kernel(int *A, int *B, int *C, int m, int k, int n)
+__global__ void matrix_mul_cuda_kernel(double *A, double *B, double *C, int m, int k, int n)
 {
   int row = blockDim.y * blockIdx.y + threadIdx.y;
   int col = blockDim.x * blockIdx.x + threadIdx.x;
 
-  int value = 0;
-  for (int l = 0; l < k; l++)
+  if (row < m && col < n) // this check is necessary
   {
-    value += A[row * k + l] * B[l * n + col];
+    double value = 0;
+    for (int l = 0; l < k; l++)
+    {
+      value += A[row * k + l] * B[l * n + col];
+    }
+    C[row * n + col] = value;
   }
-  C[row * n + col] = value;
 }
 
-void matrix_mul_cuda(int *A, int *B, int *C, int m, int k, int n, int block_size)
+void matrix_mul_cuda(double *A, double *B, double *C, int m, int k, int n, int block_size)
 {
-  int *A_d;
-  int *B_d;
-  int *C_d;
+  double *A_d;
+  double *B_d;
+  double *C_d;
 
-  cudaMalloc((void **)&A_d, sizeof(int) * m * k); // use double pointer
-  cudaMalloc((void **)&B_d, sizeof(int) * k * n);
-  cudaMalloc((void **)&C_d, sizeof(int) * m * n);
+  cudaMalloc((void **)&A_d, sizeof(double) * m * k);  // use double pointer
+  cudaMalloc((void **)&B_d, sizeof(double) * k * n);
+  cudaMalloc((void **)&C_d, sizeof(double) * m * n);
 
-  cudaMemcpy(A_d, A, sizeof(int) * m * k, cudaMemcpyHostToDevice);
-  cudaMemcpy(B_d, B, sizeof(int) * k * n, cudaMemcpyHostToDevice);
-  cudaMemcpy(C_d, C, sizeof(int) * m * n, cudaMemcpyHostToDevice);
+  cudaMemcpy(A_d, A, sizeof(double) * m * k, cudaMemcpyHostToDevice);
+  cudaMemcpy(B_d, B, sizeof(double) * k * n, cudaMemcpyHostToDevice);
+  cudaMemcpy(C_d, C, sizeof(double) * m * n, cudaMemcpyHostToDevice);
 
   int grid_x = n % block_size == 0 ? n / block_size : n / block_size + 1;
   int grid_y = m % block_size == 0 ? m / block_size : m / block_size + 1;
   dim3 dim_grid(grid_x, grid_y);
-  dim3 dim_block(block_size, block_size);
 
+  int block_x = n < block_size ? n : block_size;
+  int block_y = m < block_size ? m : block_size;
+  dim3 dim_block(block_x, block_y);
+  
   #ifdef DEBUG
     printf("dim_grid(%d, %d), dim_block(%d, %d)\n", dim_grid.x, dim_grid.y, dim_block.x, dim_block.y);
   #endif
 
   matrix_mul_cuda_kernel<<<dim_grid, dim_block>>>(A_d, B_d, C_d, m, k, n);
 
-  cudaMemcpy(C, C_d, sizeof(int) * m * n, cudaMemcpyDeviceToHost);
+  cudaMemcpy(C, C_d, sizeof(double) * m * n, cudaMemcpyDeviceToHost);
 
   cudaFree(A_d);
   cudaFree(B_d);
