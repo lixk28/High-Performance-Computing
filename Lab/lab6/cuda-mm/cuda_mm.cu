@@ -37,7 +37,8 @@ void matrix_mul_cuda(double *A, double *B, double *C, int m, int k, int n, int b
   cudaMemcpy(B_d, B, sizeof(double) * k * n, cudaMemcpyHostToDevice);
   cudaMemcpy(C_d, C, sizeof(double) * m * n, cudaMemcpyHostToDevice);
 
-  dim3 dim_grid(m / block_size);
+  int grid_x = m % block_size == 0 ? m / block_size : m / block_size + 1;
+  dim3 dim_grid(grid_x);
   dim3 dim_block(block_size);
   
   #ifdef DEBUG
